@@ -9,25 +9,66 @@
 import UIKit
 
 class GameViewController: UIViewController {
-
-    @IBOutlet weak var gameView: BezierPathsView!
     
-    var dropsPerRow = 10
-    var dropSize: CGSize {
-        let size = gameView.bounds.size.width / CGFloat(dropsPerRow)
-        return CGSize(width: size, height: size)
-    }
+    @IBOutlet weak var gameView: BezierPathsView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var frame = CGRect(origin: CGPointZero, size: dropSize)
-        frame.origin.x = CGFloat.random(dropsPerRow) * dropSize.width
-        
-        let dropView = UIView(frame: frame)
-        dropView.backgroundColor = UIColor.random
-        gameView.addSubview(dropView)
+        addBricks()
     }
-
+    
+    let bricksPerRow = 10
+    let numberOfRows = 2
+    
+    func addBricks() {
+        for var rowNumber = 0; rowNumber < numberOfRows; rowNumber++ {
+            addRow(rowNumber)
+        }
+    }
+    
+    
+    func addRow(rowNumber: Int) {
+        let brickWidth = gameView.bounds.size.width / CGFloat(bricksPerRow)
+        let brickHeight = CGFloat(50)
+        for var brickNumber = 0; brickNumber < bricksPerRow; brickNumber++ {
+            let x = CGFloat(brickNumber) * brickWidth
+            let y = CGFloat(rowNumber) * brickHeight
+            let origin = CGPoint(x: x, y: y)
+            let brick = BrickView(frame: CGRect(origin: origin, size: CGSize(width: brickWidth, height: brickHeight)))
+            brick.backgroundColor = UIColor.random
+            gameView.addSubview(brick)
+        }
+    }
+    
+//
+//    let bricksPerRow = 4
+//    let numberOfRows = 3
+//    let brickPadding = 5
+//    
+//    var brickSize: CGSize {
+//        let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
+//        let height = (gameView.bounds.size.height / 2 / CGFloat(numberOfRows)) - (2 * CGFloat(brickPadding))
+//        return CGSize(width: width, height: height)
+//    }
+//    
+//    //Call this in viewDidLoad()
+//    func addBricks() {
+//        for var rowNumber = 0; rowNumber < numberOfRows; rowNumber++ {
+//            addRow(rowNumber)
+//        }
+//    }
+//    
+//    func addRow(rowNumber: Int) {
+//        let size = brickSize
+//        for var brickNumber = 0; brickNumber < bricksPerRow; brickNumber++ {
+//            let x = (CGFloat(brickNumber) * (size.width + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
+//            let y = (CGFloat(rowNumber) * (size.height + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
+//            let origin = CGPoint(x: x, y: y)
+//            let brick = BrickView(frame: CGRect(origin: origin, size: size))
+//            brick.backgroundColor = UIColor.random
+//            gameView.addSubview(brick)
+//        }
+//    }
 }
 
 private extension CGFloat {
