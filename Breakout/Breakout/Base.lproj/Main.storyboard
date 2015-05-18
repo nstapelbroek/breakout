@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Uug-cR-ZNH">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
@@ -15,9 +16,24 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RA1-8L-qcs" customClass="BezierPathsView" customModule="Breakout" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RA1-8L-qcs" secondAttribute="trailing" id="1hO-u0-WNe"/>
+                            <constraint firstItem="RA1-8L-qcs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CUi-xY-xiR"/>
+                            <constraint firstAttribute="bottom" secondItem="RA1-8L-qcs" secondAttribute="bottom" constant="20" symbolic="YES" id="YcM-gf-ShO"/>
+                            <constraint firstItem="RA1-8L-qcs" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="cZe-VO-c4d"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="topRated" id="duM-Co-fuq"/>
+                    <connections>
+                        <outlet property="gameView" destination="RA1-8L-qcs" id="d9Q-m0-cXS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

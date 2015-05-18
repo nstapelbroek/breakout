@@ -14,6 +14,7 @@
 		28D7A88D1B09E1620077C2C8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28D7A88B1B09E1620077C2C8 /* LaunchScreen.xib */; };
 		28D7A8991B09E1620077C2C8 /* BreakoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8981B09E1620077C2C8 /* BreakoutTests.swift */; };
 		28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */; };
+		28D7A8AB1B09E5BE0077C2C8 /* BezierPathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		28D7A8971B09E1620077C2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28D7A8981B09E1620077C2C8 /* BreakoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutTests.swift; sourceTree = "<group>"; };
 		28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPathsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,11 +83,10 @@
 			children = (
 				28D7A8821B09E1620077C2C8 /* AppDelegate.swift */,
 				28D7A8841B09E1620077C2C8 /* GameViewController.swift */,
-				28D7A8861B09E1620077C2C8 /* Main.storyboard */,
-				28D7A8891B09E1620077C2C8 /* Images.xcassets */,
-				28D7A88B1B09E1620077C2C8 /* LaunchScreen.xib */,
-				28D7A8801B09E1620077C2C8 /* Supporting Files */,
 				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
+				28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */,
+				28D7A8861B09E1620077C2C8 /* Main.storyboard */,
+				28D7A8801B09E1620077C2C8 /* Supporting Files */,
 			);
 			path = Breakout;
 			sourceTree = "<group>";
@@ -93,6 +94,8 @@
 		28D7A8801B09E1620077C2C8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				28D7A8891B09E1620077C2C8 /* Images.xcassets */,
+				28D7A88B1B09E1620077C2C8 /* LaunchScreen.xib */,
 				28D7A8811B09E1620077C2C8 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28D7A8AB1B09E5BE0077C2C8 /* BezierPathsView.swift in Sources */,
 				28D7A8851B09E1620077C2C8 /* GameViewController.swift in Sources */,
 				28D7A8831B09E1620077C2C8 /* AppDelegate.swift in Sources */,
 				28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */,
