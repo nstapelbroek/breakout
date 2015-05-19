@@ -18,12 +18,12 @@ class GameViewController: UIViewController {
     }
 
     let bricksPerRow = 4
-    let numberOfRows = 3
+    let numberOfRows = 6
     let brickPadding = 5
     
     var brickSize: CGSize {
         let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
-        let height = (gameView.bounds.size.height / 2 / CGFloat(numberOfRows)) - (2 * CGFloat(brickPadding))
+        let height = (gameView.bounds.size.height / 3 / CGFloat(numberOfRows)) - (2 * CGFloat(brickPadding))
         return CGSize(width: width, height: height)
     }
 
