@@ -17,5 +17,17 @@ class PaddleView: UIView {
         // Drawing code
     }
     */
+    
+    func move(gesture: UIPanGestureRecognizer) {
+        if gesture.state == .Changed {
+            let gestureLocation = gesture.locationInView(self)
+            var newX = frame.origin.x + gestureLocation.x - (frame.width / 2)
+            if newX > 0 && newX < (superview!.bounds.width - frame.width) {
+                frame.origin = CGPoint(x: newX, y: frame.origin.y)
+            }
+            
+            gesture.setTranslation(CGPointZero, inView: self)
+        }
+    }
 
 }

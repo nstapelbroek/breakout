@@ -21,7 +21,13 @@ class GameViewController: UIViewController {
     let bricksPerRow = 4
     let numberOfRows = 6
     let brickPadding = 5
-    var paddle: PaddleView?
+    var paddle: PaddleView? {
+        didSet {
+            if paddle != nil {
+                gameView?.addGestureRecognizer(UIPanGestureRecognizer(target: paddle!, action: "move:"))
+            }
+        }
+    }
     
     var brickSize: CGSize {
         let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
