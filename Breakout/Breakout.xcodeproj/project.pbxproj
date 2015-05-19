@@ -17,6 +17,8 @@
 		28D7A8AB1B09E5BE0077C2C8 /* BezierPathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */; };
 		28D7A8AD1B09E8980077C2C8 /* BrickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8AC1B09E8980077C2C8 /* BrickView.swift */; };
 		F4041DAB1B0B52E30075AC2C /* PaddleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4041DAA1B0B52E30075AC2C /* PaddleView.swift */; };
+		F41EB9CA1B0B6DD500E03D3A /* BallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41EB9C91B0B6DD500E03D3A /* BallView.swift */; };
+		F41EB9CC1B0B71E000E03D3A /* GamePhysicsBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41EB9CB1B0B71E000E03D3A /* GamePhysicsBehavior.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPathsView.swift; sourceTree = "<group>"; };
 		28D7A8AC1B09E8980077C2C8 /* BrickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrickView.swift; sourceTree = "<group>"; };
 		F4041DAA1B0B52E30075AC2C /* PaddleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddleView.swift; sourceTree = "<group>"; };
+		F41EB9C91B0B6DD500E03D3A /* BallView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallView.swift; sourceTree = "<group>"; };
+		F41EB9CB1B0B71E000E03D3A /* GamePhysicsBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePhysicsBehavior.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,12 +91,14 @@
 			children = (
 				28D7A8821B09E1620077C2C8 /* AppDelegate.swift */,
 				28D7A8841B09E1620077C2C8 /* GameViewController.swift */,
+				F41EB9CB1B0B71E000E03D3A /* GamePhysicsBehavior.swift */,
 				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
 				28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */,
 				28D7A8AC1B09E8980077C2C8 /* BrickView.swift */,
 				28D7A8861B09E1620077C2C8 /* Main.storyboard */,
 				28D7A8801B09E1620077C2C8 /* Supporting Files */,
 				F4041DAA1B0B52E30075AC2C /* PaddleView.swift */,
+				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
 			);
 			path = Breakout;
 			sourceTree = "<group>";
@@ -226,7 +232,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				28D7A8AB1B09E5BE0077C2C8 /* BezierPathsView.swift in Sources */,
+				F41EB9CC1B0B71E000E03D3A /* GamePhysicsBehavior.swift in Sources */,
 				28D7A8851B09E1620077C2C8 /* GameViewController.swift in Sources */,
+				F41EB9CA1B0B6DD500E03D3A /* BallView.swift in Sources */,
 				28D7A8831B09E1620077C2C8 /* AppDelegate.swift in Sources */,
 				28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */,
 				F4041DAB1B0B52E30075AC2C /* PaddleView.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
     
     @IBOutlet weak var gameView: BezierPathsView!
 
@@ -16,6 +16,13 @@ class GameViewController: UIViewController {
         case Initial = 0, Loaded, Playing, Paused, Finished
     }
     
+    lazy var animator: UIDynamicAnimator = {
+        let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self.gameView)
+        lazilyCreatedDynamitAnimator.delegate = self
+        return lazilyCreatedDynamitAnimator
+        }()
+    
+    let gamePhysicsBehavior = GamePhysicsBehavior()
     var gameState = GameState.Initial
     let bricksPerRow = 4
     let numberOfRows = 6
@@ -27,12 +34,19 @@ class GameViewController: UIViewController {
             }
         }
     }
+    var ball: BallView?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        animator.addBehavior(gamePhysicsBehavior)
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if gameState == .Initial {
             addBricks()
             addPaddle()
+            addBall()
             gameState = .Loaded
         }
     }
@@ -47,13 +61,26 @@ class GameViewController: UIViewController {
         let width = gameView.bounds.size.width / 5
         let height = gameView.bounds.size.height / 30
         let size = CGSize(width: width, height: height)
-        let x = (gameView.bounds.size.width + width) / 2
+        let x = (gameView.bounds.size.width - width) / 2
         let y = gameView.bounds.size.height - (2 * height)
         let origin = CGPoint(x: x, y: y)
 
         paddle = PaddleView(frame: CGRect(origin: origin, size: size))
         paddle?.backgroundColor = UIColor.blackColor()
-        gameView.addSubview(paddle!)
+                    gamePhysicsBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: "Paddle")
+        self.gamePhysicsBehavior.addPaddle(paddle!)
+    }
+    
+    func addBall() {
+        let width = gameView.bounds.size.width / 20
+        let size = CGSize(width: width, height: width)
+        let x = (gameView.bounds.size.width - width) / 2
+        let y = (gameView.bounds.size.height + width) / 2
+        let origin = CGPoint(x: x, y: y)
+        
+        ball = BallView(frame: CGRect(origin: origin, size: size))
+        ball?.backgroundColor = UIColor.orangeColor()
+        self.gamePhysicsBehavior.addBall(ball!)
     }
     
     func addBricks() {
@@ -70,7 +97,7 @@ class GameViewController: UIViewController {
             let origin = CGPoint(x: x, y: y)
             let brick = BrickView(frame: CGRect(origin: origin, size: size))
             brick.backgroundColor = UIColor.random
-            gameView.addSubview(brick)
+            self.gamePhysicsBehavior.addBrick(brick)
         }
     }
 }
