@@ -15,11 +15,13 @@ class GameViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         addBricks()
+        addPaddle()
     }
 
     let bricksPerRow = 4
     let numberOfRows = 6
     let brickPadding = 5
+    var paddle: PaddleView?
     
     var brickSize: CGSize {
         let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
@@ -27,6 +29,19 @@ class GameViewController: UIViewController {
         return CGSize(width: width, height: height)
     }
 
+    func addPaddle() {
+        let width = gameView.bounds.size.width / 5
+        let height = gameView.bounds.size.height / 30
+        let size = CGSize(width: width, height: height)
+        let x = (gameView.bounds.size.width + width) / 2
+        let y = gameView.bounds.size.height - (2 * height)
+        let origin = CGPoint(x: x, y: y)
+
+        paddle = PaddleView(frame: CGRect(origin: origin, size: size))
+        paddle?.backgroundColor = UIColor.blackColor()
+        gameView.addSubview(paddle!)
+    }
+    
     func addBricks() {
         for var rowNumber = 0; rowNumber < numberOfRows; rowNumber++ {
             addRow(rowNumber)

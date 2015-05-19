@@ -16,6 +16,7 @@
 		28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */; };
 		28D7A8AB1B09E5BE0077C2C8 /* BezierPathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */; };
 		28D7A8AD1B09E8980077C2C8 /* BrickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8AC1B09E8980077C2C8 /* BrickView.swift */; };
+		F4041DAB1B0B52E30075AC2C /* PaddleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4041DAA1B0B52E30075AC2C /* PaddleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPathsView.swift; sourceTree = "<group>"; };
 		28D7A8AC1B09E8980077C2C8 /* BrickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrickView.swift; sourceTree = "<group>"; };
+		F4041DAA1B0B52E30075AC2C /* PaddleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				28D7A8AC1B09E8980077C2C8 /* BrickView.swift */,
 				28D7A8861B09E1620077C2C8 /* Main.storyboard */,
 				28D7A8801B09E1620077C2C8 /* Supporting Files */,
+				F4041DAA1B0B52E30075AC2C /* PaddleView.swift */,
 			);
 			path = Breakout;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				28D7A8851B09E1620077C2C8 /* GameViewController.swift in Sources */,
 				28D7A8831B09E1620077C2C8 /* AppDelegate.swift in Sources */,
 				28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */,
+				F4041DAB1B0B52E30075AC2C /* PaddleView.swift in Sources */,
 				28D7A8AD1B09E8980077C2C8 /* BrickView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +427,7 @@
 				28D7A89E1B09E1620077C2C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		28D7A89F1B09E1620077C2C8 /* Build configuration list for PBXNativeTarget "BreakoutTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +436,7 @@
 				28D7A8A11B09E1620077C2C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
