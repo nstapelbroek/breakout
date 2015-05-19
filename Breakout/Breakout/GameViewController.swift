@@ -11,13 +11,12 @@ import UIKit
 class GameViewController: UIViewController {
     
     @IBOutlet weak var gameView: BezierPathsView!
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        addBricks()
-        addPaddle()
-    }
 
+    enum GameState: Int {
+        case Initial = 0, Loaded, Playing, Paused, Finished
+    }
+    
+    var gameState = GameState.Initial
     let bricksPerRow = 4
     let numberOfRows = 6
     let brickPadding = 5
@@ -26,6 +25,15 @@ class GameViewController: UIViewController {
             if paddle != nil {
                 gameView?.addGestureRecognizer(UIPanGestureRecognizer(target: paddle!, action: "move:"))
             }
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if gameState == .Initial {
+            addBricks()
+            addPaddle()
+            gameState = .Loaded
         }
     }
     

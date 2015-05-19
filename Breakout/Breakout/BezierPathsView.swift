@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class BezierPathsView: UIView {
     
     private var bezierPaths = [String:UIBezierPath]()
