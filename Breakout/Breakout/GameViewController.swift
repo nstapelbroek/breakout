@@ -12,8 +12,8 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var gameView: BezierPathsView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         addBricks()
     }
     
@@ -29,7 +29,7 @@ class GameViewController: UIViewController {
     
     func addRow(rowNumber: Int) {
         let brickWidth = gameView.bounds.size.width / CGFloat(bricksPerRow)
-        let brickHeight = CGFloat(50)
+        let brickHeight = brickWidth
         for var brickNumber = 0; brickNumber < bricksPerRow; brickNumber++ {
             let x = CGFloat(brickNumber) * brickWidth
             let y = CGFloat(rowNumber) * brickHeight
