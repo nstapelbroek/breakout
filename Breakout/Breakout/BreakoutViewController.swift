@@ -18,6 +18,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
 
     struct PathNames {
         static let BoxBarrier = "Box"
+        static let BottomBarrier = "Bottom"
         static let PaddleBarrier = "Paddle"
     }
     
@@ -64,6 +65,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         //Double the height to make the ball disappear when it hits the bottom of the screen
         //rect.size.height *= 2
         breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: PathNames.BoxBarrier)
+        
+        let bottomBarrierOrigin = CGPoint(x: 0, y: gameView.bounds.size.height)
+        let bottomBarrierSize = CGSize(width: gameView.bounds.size.width, height: 1)
+        breakoutBehavior.addBarrier(UIBezierPath(rect: CGRect(origin: bottomBarrierOrigin, size: bottomBarrierSize)), named: PathNames.BottomBarrier)
     }
     
     var brickSize: CGSize {
@@ -124,6 +129,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
         if let index = identifier as? Int {
             removeBrickAtIndex(index)
+        } else if let pathName = identifier as? String {
+            if pathName == PathNames.BottomBarrier {
+                println("You lost the game!")
+            }
         }
     }
     
