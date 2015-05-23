@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		28D7A8831B09E1620077C2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8821B09E1620077C2C8 /* AppDelegate.swift */; };
-		28D7A8851B09E1620077C2C8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8841B09E1620077C2C8 /* GameViewController.swift */; };
+		28D7A8851B09E1620077C2C8 /* BreakoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8841B09E1620077C2C8 /* BreakoutViewController.swift */; };
 		28D7A8881B09E1620077C2C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D7A8861B09E1620077C2C8 /* Main.storyboard */; };
 		28D7A88A1B09E1620077C2C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28D7A8891B09E1620077C2C8 /* Images.xcassets */; };
 		28D7A88D1B09E1620077C2C8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28D7A88B1B09E1620077C2C8 /* LaunchScreen.xib */; };
@@ -35,7 +35,7 @@
 		28D7A87D1B09E1620077C2C8 /* Breakout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breakout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28D7A8811B09E1620077C2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28D7A8821B09E1620077C2C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		28D7A8841B09E1620077C2C8 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		28D7A8841B09E1620077C2C8 /* BreakoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutViewController.swift; sourceTree = "<group>"; };
 		28D7A8871B09E1620077C2C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		28D7A8891B09E1620077C2C8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		28D7A88C1B09E1620077C2C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				28D7A8821B09E1620077C2C8 /* AppDelegate.swift */,
-				28D7A8841B09E1620077C2C8 /* GameViewController.swift */,
+				28D7A8841B09E1620077C2C8 /* BreakoutViewController.swift */,
 				F41EB9CB1B0B71E000E03D3A /* BreakoutBehavior.swift */,
 				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
 				28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */,
@@ -233,7 +233,7 @@
 			files = (
 				28D7A8AB1B09E5BE0077C2C8 /* BezierPathsView.swift in Sources */,
 				F41EB9CC1B0B71E000E03D3A /* BreakoutBehavior.swift in Sources */,
-				28D7A8851B09E1620077C2C8 /* GameViewController.swift in Sources */,
+				28D7A8851B09E1620077C2C8 /* BreakoutViewController.swift in Sources */,
 				F41EB9CA1B0B6DD500E03D3A /* BallView.swift in Sources */,
 				28D7A8831B09E1620077C2C8 /* AppDelegate.swift in Sources */,
 				28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  BreakoutViewController.swift
 //  Breakout
 //
 //  Created by Mad Nico on 18/05/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
+class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
     
     @IBOutlet weak var gameView: BezierPathsView!
 
