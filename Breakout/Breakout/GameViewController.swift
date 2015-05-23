@@ -51,6 +51,14 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        var rect = gameView.bounds
+        //Double the height to make the ball disappear when it hits the bottom of the screen
+        //rect.size.height *= 2
+        gamePhysicsBehavior.addBarrier(UIBezierPath(rect: rect), named: "Box")
+    }
+    
     var brickSize: CGSize {
         let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
         let height = (gameView.bounds.size.height / 3 / CGFloat(numberOfRows)) - (2 * CGFloat(brickPadding))
@@ -81,6 +89,7 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         ball = BallView(frame: CGRect(origin: origin, size: size))
         ball?.backgroundColor = UIColor.orangeColor()
         self.gamePhysicsBehavior.addBall(ball!)
+        self.gamePhysicsBehavior.pushBall(ball!)
     }
     
     func addBricks() {
@@ -97,6 +106,8 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
             let origin = CGPoint(x: x, y: y)
             let brick = BrickView(frame: CGRect(origin: origin, size: size))
             brick.backgroundColor = UIColor.random
+            
+            gamePhysicsBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: "\((brickNumber + (bricksPerRow * rowNumber)))")
             self.gamePhysicsBehavior.addBrick(brick)
         }
     }

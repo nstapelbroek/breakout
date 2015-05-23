@@ -13,7 +13,8 @@ class GamePhysicsBehavior: UIDynamicBehavior {
     
     lazy var collider: UICollisionBehavior = {
         let lazilyCreatedCollider = UICollisionBehavior()
-        lazilyCreatedCollider.translatesReferenceBoundsIntoBoundary = true
+        //lazilyCreatedCollider.translatesReferenceBoundsIntoBoundary = true
+        //Add action for collision
         return lazilyCreatedCollider
         }()
     
@@ -26,7 +27,7 @@ class GamePhysicsBehavior: UIDynamicBehavior {
     
     lazy var ballBehavior: UIDynamicItemBehavior = {
         let lazilyCreatedBallBehavior = UIDynamicItemBehavior()
-        lazilyCreatedBallBehavior.allowsRotation = true
+        lazilyCreatedBallBehavior.allowsRotation = false
         lazilyCreatedBallBehavior.elasticity = 1.0
         lazilyCreatedBallBehavior.resistance = 0.0
         lazilyCreatedBallBehavior.friction = 0.0
@@ -44,23 +45,38 @@ class GamePhysicsBehavior: UIDynamicBehavior {
     func addBall(ball: BallView) {
         dynamicAnimator?.referenceView?.addSubview(ball)
         collider.addItem(ball)
-        gravity.addItem(ball)
+        //gravity.addItem(ball)
         ballBehavior.addItem(ball)
-        ballBehavior.addLinearVelocity(CGPoint(x: 100, y: 100) , forItem: ball)
+        //ballBehavior.addLinearVelocity(CGPoint(x: 100, y: 100) , forItem: ball)
     }
+    
+    func pushBall(ball: UIView) {
+        let push = UIPushBehavior(items: [ball], mode: .Instantaneous)
+        push.magnitude = 0.1
+        
+        push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
+        push.action = { [weak push] in
+            //Remove the push if it is no longer in use
+            if !push!.active {
+                self.removeChildBehavior(push!)
+            }
+        }
+        addChildBehavior(push)
+    }
+
     
     func addPaddle(paddle: PaddleView) {
         dynamicAnimator?.referenceView?.addSubview(paddle)
-        collider.addItem(paddle)
+        //collider.addItem(paddle)
     }
     
     func addBrick(brick: BrickView) {
         dynamicAnimator?.referenceView?.addSubview(brick)
-        collider.addItem(brick)
+        //collider.addItem(brick)
     }
     
     func removeBrick(brick: BrickView) {
-        collider.removeItem(brick)
+        //collider.removeItem(brick)
         brick.removeFromSuperview()
     }
     
