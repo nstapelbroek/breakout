@@ -9,21 +9,12 @@
 import UIKit
 
 class BreakoutBehavior: UIDynamicBehavior {
-    var gravity = UIGravityBehavior()
     
     lazy var collider: UICollisionBehavior = {
         let lazilyCreatedCollider = UICollisionBehavior()
-        //lazilyCreatedCollider.translatesReferenceBoundsIntoBoundary = true
         //Add action for collision
         return lazilyCreatedCollider
         }()
-    
-//    lazy var pusher: UIPushBehavior = {
-//        let lazilyCreatedPusher = UIPushBehavior(items: nil, mode: UIPushBehaviorMode.Instantaneous)
-//        lazilyCreatedPusher.magnitude = 0.25
-//        lazilyCreatedPusher.angle = CGFloat(1.1 * M_PI)
-//        return lazilyCreatedPusher
-//        }()
     
     lazy var ballBehavior: UIDynamicItemBehavior = {
         let lazilyCreatedBallBehavior = UIDynamicItemBehavior()
@@ -37,7 +28,6 @@ class BreakoutBehavior: UIDynamicBehavior {
     override init() {
         super.init()
         addChildBehavior(collider)
-        addChildBehavior(gravity)
         addChildBehavior(ballBehavior)
         
     }
@@ -45,9 +35,7 @@ class BreakoutBehavior: UIDynamicBehavior {
     func addBall(ball: BallView) {
         dynamicAnimator?.referenceView?.addSubview(ball)
         collider.addItem(ball)
-        //gravity.addItem(ball)
         ballBehavior.addItem(ball)
-        //ballBehavior.addLinearVelocity(CGPoint(x: 100, y: 100) , forItem: ball)
     }
     
     func pushBall(ball: UIView) {
@@ -67,16 +55,13 @@ class BreakoutBehavior: UIDynamicBehavior {
     
     func addPaddle(paddle: PaddleView) {
         dynamicAnimator?.referenceView?.addSubview(paddle)
-        //collider.addItem(paddle)
     }
     
     func addBrick(brick: BrickView) {
         dynamicAnimator?.referenceView?.addSubview(brick)
-        //collider.addItem(brick)
     }
     
     func removeBrick(brick: BrickView) {
-        //collider.removeItem(brick)
         brick.removeFromSuperview()
     }
     
