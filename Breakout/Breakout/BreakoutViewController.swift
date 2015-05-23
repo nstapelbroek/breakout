@@ -16,10 +16,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
         case Initial = 0, Loaded, Playing, Paused, Finished
     }
 
-struct PathNames {
- static let BoxBarrier = "Box"
-static let PaddleBarrier = "Paddle"
-}
+    struct PathNames {
+        static let BoxBarrier = "Box"
+        static let PaddleBarrier = "Paddle"
+    }
     
     lazy var animator: UIDynamicAnimator = {
         let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self.gameView)
