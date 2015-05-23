@@ -87,8 +87,9 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
 
         paddle = PaddleView(frame: CGRect(origin: origin, size: size))
         paddle?.backgroundColor = UIColor.blackColor()
-                    breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
+        breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
         self.breakoutBehavior.addPaddle(paddle!)
+        paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
     }
     
     func addBall() {

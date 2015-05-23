@@ -9,6 +9,9 @@
 import UIKit
 
 class PaddleView: UIView {
+    
+    private var behavior: BreakoutBehavior?
+    private var pathName: NSCopying?
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -27,7 +30,16 @@ class PaddleView: UIView {
             }
             
             gesture.setTranslation(CGPointZero, inView: self)
+            
+            if behavior != nil && pathName != nil {
+                behavior!.addBarrier(UIBezierPath(rect: frame), named: pathName!)
+            }
         }
+    }
+
+    func setBreakoutBehavior(behavior: BreakoutBehavior, withPathName pathName: NSCopying) {
+        self.behavior = behavior
+        self.pathName = pathName
     }
 
 }
