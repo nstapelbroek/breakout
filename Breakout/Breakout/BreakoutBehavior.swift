@@ -1,5 +1,5 @@
 //
-//  GamePhysicsBehavior.swift
+//  BreakoutBehavior.swift
 //  Breakout
 //
 //  Created by Simon de Lang on 19-05-15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GamePhysicsBehavior: UIDynamicBehavior {
+class BreakoutBehavior: UIDynamicBehavior {
     var gravity = UIGravityBehavior()
     
     lazy var collider: UICollisionBehavior = {

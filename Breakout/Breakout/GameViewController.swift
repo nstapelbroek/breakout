@@ -22,7 +22,7 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         return lazilyCreatedDynamitAnimator
         }()
     
-    let gamePhysicsBehavior = GamePhysicsBehavior()
+    let breakoutBehavior = BreakoutBehavior()
     var gameState = GameState.Initial
     let bricksPerRow = 4
     let numberOfRows = 6
@@ -38,7 +38,7 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        animator.addBehavior(gamePhysicsBehavior)
+        animator.addBehavior(breakoutBehavior)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,7 +56,7 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         var rect = gameView.bounds
         //Double the height to make the ball disappear when it hits the bottom of the screen
         //rect.size.height *= 2
-        gamePhysicsBehavior.addBarrier(UIBezierPath(rect: rect), named: "Box")
+        breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: "Box")
     }
     
     var brickSize: CGSize {
@@ -75,8 +75,8 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
 
         paddle = PaddleView(frame: CGRect(origin: origin, size: size))
         paddle?.backgroundColor = UIColor.blackColor()
-                    gamePhysicsBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: "Paddle")
-        self.gamePhysicsBehavior.addPaddle(paddle!)
+                    breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: "Paddle")
+        self.breakoutBehavior.addPaddle(paddle!)
     }
     
     func addBall() {
@@ -88,8 +88,8 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
         
         ball = BallView(frame: CGRect(origin: origin, size: size))
         ball?.backgroundColor = UIColor.orangeColor()
-        self.gamePhysicsBehavior.addBall(ball!)
-        self.gamePhysicsBehavior.pushBall(ball!)
+        self.breakoutBehavior.addBall(ball!)
+        self.breakoutBehavior.pushBall(ball!)
     }
     
     func addBricks() {
@@ -107,8 +107,8 @@ class GameViewController: UIViewController, UIDynamicAnimatorDelegate {
             let brick = BrickView(frame: CGRect(origin: origin, size: size))
             brick.backgroundColor = UIColor.random
             
-            gamePhysicsBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: "\((brickNumber + (bricksPerRow * rowNumber)))")
-            self.gamePhysicsBehavior.addBrick(brick)
+            breakoutBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: "\((brickNumber + (bricksPerRow * rowNumber)))")
+            self.breakoutBehavior.addBrick(brick)
         }
     }
 }
