@@ -10,6 +10,11 @@ import UIKit
 
 class BreakoutBehavior: UIDynamicBehavior {
     
+    var collisionDelegate: UICollisionBehaviorDelegate? {
+        get { return collider.collisionDelegate }
+        set { collider.collisionDelegate = newValue }
+    }
+    
     lazy var collider: UICollisionBehavior = {
         let lazilyCreatedCollider = UICollisionBehavior()
         //Add action for collision
@@ -65,9 +70,13 @@ class BreakoutBehavior: UIDynamicBehavior {
         brick.removeFromSuperview()
     }
     
-    func addBarrier(path: UIBezierPath, named name: String) {
+    func addBarrier(path: UIBezierPath, named name: NSCopying) {
         collider.removeBoundaryWithIdentifier(name)
         collider.addBoundaryWithIdentifier(name, forPath: path)
+    }
+    
+    func removeBarrier(named name: NSCopying) {
+        collider.removeBoundaryWithIdentifier(name)
     }
 
 }

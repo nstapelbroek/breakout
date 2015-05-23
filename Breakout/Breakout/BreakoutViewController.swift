@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
+class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate {
     
     @IBOutlet weak var gameView: BezierPathsView!
 
@@ -40,10 +40,12 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
         }
     }
     var ball: BallView?
+    var bricks = [Int:BrickView]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         animator.addBehavior(breakoutBehavior)
+        breakoutBehavior.collisionDelegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -112,8 +114,23 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
             let brick = BrickView(frame: CGRect(origin: origin, size: size))
             brick.backgroundColor = UIColor.random
             
-            breakoutBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: "\((brickNumber + (bricksPerRow * rowNumber)))")
+            let brickId = brickNumber + (bricksPerRow * rowNumber)
+            bricks[brickId] = brick
+            breakoutBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: brickId)
             self.breakoutBehavior.addBrick(brick)
+        }
+    }
+    
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
+        if let index = identifier as? Int {
+            removeBrickAtIndex(index)
+        }
+    }
+    
+    func removeBrickAtIndex(index: Int) {
+        if let brick = bricks[index] {
+            breakoutBehavior.removeBrick(brick)
+            breakoutBehavior.removeBarrier(named: index)
         }
     }
 }
