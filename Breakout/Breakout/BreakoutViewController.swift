@@ -66,27 +66,14 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
     }
 
     func addPaddle() {
-        let width = gameView.bounds.size.width / 5
-        let height = gameView.bounds.size.height / 30
-        let size = CGSize(width: width, height: height)
-        let x = (gameView.bounds.size.width - width) / 2
-        let y = gameView.bounds.size.height - (2 * height)
-        let origin = CGPoint(x: x, y: y)
-
-        paddle = PaddleView(frame: CGRect(origin: origin, size: size))
+        paddle = PaddleView(gameFrame: gameView.bounds.size, maxWidth: 0.20)
         paddle?.backgroundColor = UIColor.blackColor()
                     breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: "Paddle")
         self.breakoutBehavior.addPaddle(paddle!)
     }
     
     func addBall() {
-        let width = gameView.bounds.size.width / 20
-        let size = CGSize(width: width, height: width)
-        let x = (gameView.bounds.size.width - width) / 2
-        let y = (gameView.bounds.size.height + width) / 2
-        let origin = CGPoint(x: x, y: y)
-        
-        ball = BallView(frame: CGRect(origin: origin, size: size))
+        ball = BallView(gameFrame: gameView.bounds.size, maxWidth: 0.05)
         ball?.backgroundColor = UIColor.orangeColor()
         self.breakoutBehavior.addBall(ball!)
         self.breakoutBehavior.pushBall(ball!)
