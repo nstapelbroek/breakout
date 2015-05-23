@@ -15,6 +15,11 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
     enum GameState: Int {
         case Initial = 0, Loaded, Playing, Paused, Finished
     }
+
+struct PathNames {
+ static let BoxBarrier = "Box"
+static let PaddleBarrier = "Paddle"
+}
     
     lazy var animator: UIDynamicAnimator = {
         let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self.gameView)
@@ -56,7 +61,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
         var rect = gameView.bounds
         //Double the height to make the ball disappear when it hits the bottom of the screen
         //rect.size.height *= 2
-        breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: "Box")
+        breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: PathNames.BoxBarrier)
     }
     
     var brickSize: CGSize {
@@ -75,7 +80,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate {
 
         paddle = PaddleView(frame: CGRect(origin: origin, size: size))
         paddle?.backgroundColor = UIColor.blackColor()
-                    breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: "Paddle")
+                    breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
         self.breakoutBehavior.addPaddle(paddle!)
     }
     
