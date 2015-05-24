@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
-        <!--Breakout View Controller-->
+        <!--Breakout-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="BreakoutViewController" customModule="Breakout" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,7 +29,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RA1-8L-qcs" secondAttribute="bottom" id="iTF-LS-tuF"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="topRated" id="duM-Co-fuq"/>
+                    <tabBarItem key="tabBarItem" title="Breakout" image="Breakout" id="duM-Co-fuq"/>
                     <connections>
                         <outlet property="gameView" destination="RA1-8L-qcs" id="dbf-hA-3BC"/>
                     </connections>
@@ -38,7 +38,7 @@
             </objects>
             <point key="canvasLocation" x="1161" y="187"/>
         </scene>
-        <!--Settings Table View Controller-->
+        <!--Settings-->
         <scene sceneID="blZ-7x-XVP">
             <objects>
                 <tableViewController id="svH-py-TPn" customClass="SettingsTableViewController" customModule="Breakout" customModuleProvider="target" sceneMemberID="viewController">
@@ -59,7 +59,7 @@
                             <outlet property="delegate" destination="svH-py-TPn" id="C7M-PP-b3w"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="mostViewed" id="TUq-g3-c1Z"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="TUq-g3-c1Z"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVH-8u-tJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -85,4 +85,8 @@
             <point key="canvasLocation" x="273" y="543"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Breakout" width="25" height="25"/>
+        <image name="Settings" width="25" height="25"/>
+    </resources>
 </document>
