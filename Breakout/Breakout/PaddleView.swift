@@ -13,6 +13,21 @@ class PaddleView: UIView {
     private var behavior: BreakoutBehavior?
     private var pathName: NSCopying?
 
+    init(gameFrame: CGSize, maxWidth: CGFloat) {
+        let width = gameFrame.width * maxWidth
+        let height = gameFrame.height / 30
+        let size = CGSize(width: width, height: height)
+        let x = (gameFrame.width - width) / 2
+        let y = gameFrame.height - (2 * height)
+        let origin = CGPoint(x: x, y: y)
+        
+        super.init(frame: CGRect(origin: origin, size: size))
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

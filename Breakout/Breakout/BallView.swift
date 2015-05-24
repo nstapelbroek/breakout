@@ -10,6 +10,20 @@ import UIKit
 
 class BallView: UIView {
 
+    init(gameFrame: CGSize, maxWidth: CGFloat) {
+        let width = gameFrame.width / 20
+        let size = CGSize(width: width, height: width)
+        let x = (gameFrame.width - width) / 2
+        let y = (gameFrame.height + width) / 2
+        let origin = CGPoint(x: x, y: y)
+        
+        super.init(frame: CGRect(origin: origin, size: size))
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
