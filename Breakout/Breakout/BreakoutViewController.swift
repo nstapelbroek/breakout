@@ -42,6 +42,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     var ball: BallView?
     var bricks = [Int:BrickView]()
+    var lastCollidedItem: NSCopying?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,12 +115,20 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         }
     }
     
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
+        
+    }
+    
+    
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
-        if let index = identifier as? Int {
-            removeBrickAtIndex(index)
-        } else if let pathName = identifier as? String {
-            if pathName == PathNames.BottomBarrier {
-                println("You lost the game!")
+        if(identifier !== lastCollidedItem || lastCollidedItem === nil) {
+            lastCollidedItem = identifier
+            if let index = identifier as? Int {
+                removeBrickAtIndex(index)
+            } else if let pathName = identifier as? String {
+                if pathName == PathNames.BottomBarrier {
+                    println("You lost the game!")
+                }
             }
         }
     }
