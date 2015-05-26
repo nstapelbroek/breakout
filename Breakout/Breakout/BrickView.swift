@@ -23,4 +23,11 @@ class BrickView: UIView {
     required init(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
     }
+    
+    func getRandomProperty() -> String {
+        let array = ["alpha", "width", "height"]
+        let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+        return array[randomIndex]
+    }
+
 }

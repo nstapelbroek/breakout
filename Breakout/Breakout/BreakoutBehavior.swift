@@ -69,7 +69,13 @@ class BreakoutBehavior: UIDynamicBehavior {
     func removeBrick(brick: BrickView) {
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut,
             animations: {
-                brick.alpha = 0.0
+                let property = brick.getRandomProperty()
+                switch property {
+                    case "alpha": brick.alpha = 0.0
+                    case "height": brick.bounds.size.height = 0
+                    case "width": brick.bounds.size.width = 0
+                    default : println("Something unexpected happend while animating the brick")
+                }
             }, completion: { (success) -> Void in
                 brick.removeFromSuperview()
             }
