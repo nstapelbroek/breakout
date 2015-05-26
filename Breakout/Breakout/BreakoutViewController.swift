@@ -33,6 +33,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     let bricksPerRow = 4
     let numberOfRows = 6
     let brickPadding = 5
+    let numberOfBalls = 2 // @todo: should be loaded from the settings
     var paddle: PaddleView? {
         didSet {
             if paddle != nil {
@@ -40,13 +41,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
             }
         }
     }
-    var ball: BallView? {
-        didSet {
-            if ball != nil {
-                gameView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "push:"))
-            }
-        }
-    }
+    var balls = [BallView]()
     var bricks = [Int:BrickView]()
     var lastCollidedItem: NSCopying?
     
@@ -61,7 +56,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         if gameState == .Initial {
             addBricks()
             addPaddle()
-            addBall()
+            addBalls()
             gameState = .Loaded
         }
     }
@@ -92,11 +87,19 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
     }
     
-    func addBall() {
-        ball = BallView(gameFrame: gameView.bounds.size, maxWidth: 0.05)
-        ball?.backgroundColor = UIColor.orangeColor()
-        self.breakoutBehavior.addBall(ball!)
-        self.breakoutBehavior.pushBall(ball!)
+    func addBalls() {
+        for var i = 0; i < self.numberOfBalls; i++
+        {
+            var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: 0.05)
+            ball.backgroundColor = UIColor.orangeColor()
+            self.breakoutBehavior.addBall(ball)
+            self.breakoutBehavior.pushBall(ball)
+            self.balls.append(ball)
+        }
+        
+        if !balls.isEmpty {
+            gameView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "push:"))
+        }
     }
     
     func addBricks() {
@@ -105,9 +108,11 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         }
     }
     
-    func push(gesture: UIPanGestureRecognizer) {
-        if gesture.state == .Ended && self.ball !== nil {
-            self.breakoutBehavior.pushBall(self.ball!)
+    func push(gesture: UITapGestureRecognizer) {
+        if gesture.state == .Ended {
+            for ball in self.balls {
+                self.breakoutBehavior.pushBall(ball)
+            }
         }
     }
     
