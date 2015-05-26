@@ -67,7 +67,13 @@ class BreakoutBehavior: UIDynamicBehavior {
     }
     
     func removeBrick(brick: BrickView) {
-        brick.removeFromSuperview()
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                brick.alpha = 0.0
+            }, completion: { (success) -> Void in
+                brick.removeFromSuperview()
+            }
+        )
     }
     
     func addBarrier(path: UIBezierPath, named name: NSCopying) {
@@ -78,5 +84,4 @@ class BreakoutBehavior: UIDynamicBehavior {
     func removeBarrier(named name: NSCopying) {
         collider.removeBoundaryWithIdentifier(name)
     }
-
 }

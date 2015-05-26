@@ -94,11 +94,11 @@
 				F41EB9CB1B0B71E000E03D3A /* BreakoutBehavior.swift */,
 				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
 				28D7A8AA1B09E5BE0077C2C8 /* BezierPathsView.swift */,
+				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
+				F4041DAA1B0B52E30075AC2C /* PaddleView.swift */,
 				28D7A8AC1B09E8980077C2C8 /* BrickView.swift */,
 				28D7A8861B09E1620077C2C8 /* Main.storyboard */,
 				28D7A8801B09E1620077C2C8 /* Supporting Files */,
-				F4041DAA1B0B52E30075AC2C /* PaddleView.swift */,
-				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
 			);
 			path = Breakout;
 			sourceTree = "<group>";
