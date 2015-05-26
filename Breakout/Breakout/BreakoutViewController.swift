@@ -40,7 +40,13 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
             }
         }
     }
-    var ball: BallView?
+    var ball: BallView? {
+        didSet {
+            if ball != nil {
+                gameView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "push:"))
+            }
+        }
+    }
     var bricks = [Int:BrickView]()
     var lastCollidedItem: NSCopying?
     
@@ -96,6 +102,12 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     func addBricks() {
         for var rowNumber = 0; rowNumber < numberOfRows; rowNumber++ {
             addRow(rowNumber)
+        }
+    }
+    
+    func push(gesture: UIPanGestureRecognizer) {
+        if gesture.state == .Ended && self.ball !== nil {
+            self.breakoutBehavior.pushBall(self.ball!)
         }
     }
     
