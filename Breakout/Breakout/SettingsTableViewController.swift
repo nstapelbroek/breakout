@@ -9,15 +9,44 @@
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
+    
+    private let settings = BreakoutSettings.load()
 
+    @IBOutlet weak var paddleWidthSlider: UISlider!
+    @IBOutlet weak var ballSpeedSlider: UISlider!
+    @IBOutlet weak var numberOfBallsSegmentedControl: UISegmentedControl!
+    
+    //Gets or sets the number of balls. The selectedSegmentIndex is offset due to index 0 meaning 1 ball.
+    var numberOfBalls: Int {
+        get {
+            return numberOfBallsSegmentedControl.selectedSegmentIndex + 1
+        }
+        set {
+            numberOfBallsSegmentedControl.selectedSegmentIndex = newValue - 1
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        paddleWidthSlider.setValue(settings.paddleWidth!, animated: false)
+        ballSpeedSlider.setValue(settings.ballSpeed!, animated: false)
+        numberOfBalls = settings.numberOfBalls!
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        settings.paddleWidth = paddleWidthSlider.value
+        settings.ballSpeed = ballSpeedSlider.value
+        settings.numberOfBalls = numberOfBalls
+        settings.save()
     }
 
     override func didReceiveMemoryWarning() {

@@ -10,6 +10,8 @@ import UIKit
 
 class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate {
     
+    private var settings = BreakoutSettings.load()
+    
     @IBOutlet weak var gameView: BezierPathsView!
 
     enum GameState: Int {
@@ -33,7 +35,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     let bricksPerRow = 4
     let numberOfRows = 6
     let brickPadding = 5
-    let numberOfBalls = 2 // @todo: should be loaded from the settings
     var paddle: PaddleView? {
         didSet {
             if paddle != nil {
@@ -80,7 +81,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
 
     func addPaddle() {
-        paddle = PaddleView(gameFrame: gameView.bounds.size, maxWidth: 0.20)
+        paddle = PaddleView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.paddleWidth!))
         paddle?.backgroundColor = UIColor.blackColor()
         breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
         self.breakoutBehavior.addPaddle(paddle!)
@@ -88,9 +89,9 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     
     func addBalls() {
-        for var i = 0; i < self.numberOfBalls; i++
+        for var i = 0; i < settings.numberOfBalls!; i++
         {
-            var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: 0.05)
+            var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.ballSpeed!))
             ball.backgroundColor = UIColor.orangeColor()
             self.breakoutBehavior.addBall(ball)
             self.breakoutBehavior.pushBall(ball)

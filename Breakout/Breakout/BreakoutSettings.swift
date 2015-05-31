@@ -16,12 +16,12 @@ class BreakoutSettings {
         static let FirstLoad = "FirstLoad"
     }
     
-    private static let defaultPaddleWidth = 0.20
-    private static let defaultBallSpeed = 0.05
-    private static let defaultNumberOfBalls = 1
+    private static let defaultPaddleWidth: Float = 0.20
+    private static let defaultBallSpeed: Float = 0.05
+    private static let defaultNumberOfBalls: Int = 1
     
-    var paddleWidth: Double?
-    var ballSpeed: Double?
+    var paddleWidth: Float?
+    var ballSpeed: Float?
     var numberOfBalls: Int?
     
     //Private init to force use of the load function.
@@ -38,24 +38,24 @@ class BreakoutSettings {
             defaults = setDefaultSettings()
         }
         
-        settings.paddleWidth = defaults.doubleForKey(DefaultNames.PaddleWidth)
-        settings.ballSpeed = defaults.doubleForKey(DefaultNames.BallSpeed)
+        settings.paddleWidth = defaults.floatForKey(DefaultNames.PaddleWidth)
+        settings.ballSpeed = defaults.floatForKey(DefaultNames.BallSpeed)
         settings.numberOfBalls = defaults.integerForKey(DefaultNames.NumberOfBalls)
         return settings;
     }
     
     static func setDefaultSettings() -> NSUserDefaults {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setDouble(defaultPaddleWidth, forKey: DefaultNames.PaddleWidth)
-        defaults.setDouble(defaultBallSpeed, forKey: DefaultNames.BallSpeed)
+        defaults.setFloat(defaultPaddleWidth, forKey: DefaultNames.PaddleWidth)
+        defaults.setFloat(defaultBallSpeed, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(defaultNumberOfBalls, forKey: DefaultNames.NumberOfBalls)
         return defaults
     }
     
     func save() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setDouble(self.paddleWidth!, forKey: DefaultNames.PaddleWidth)
-        defaults.setDouble(self.ballSpeed!, forKey: DefaultNames.BallSpeed)
+        defaults.setFloat(self.paddleWidth!, forKey: DefaultNames.PaddleWidth)
+        defaults.setFloat(self.ballSpeed!, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
     }
 }

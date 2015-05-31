@@ -52,7 +52,7 @@
                         <sections>
                             <tableViewSection id="djt-uh-vnh">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="paddleSize" rowHeight="77" id="j0y-aS-BzP">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PaddleWidth" rowHeight="77" id="j0y-aS-BzP">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j0y-aS-BzP" id="6T5-q7-9eh">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -93,7 +93,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ballSpeed" rowHeight="77" id="zhk-Gc-xHT">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BallSpeed" rowHeight="77" id="zhk-Gc-xHT">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zhk-Gc-xHT" id="olG-gw-pwD">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -134,7 +134,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="numberOfBalls" id="hC1-Pj-LyL">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NumberOfBalls" id="hC1-Pj-LyL">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hC1-Pj-LyL" id="YuY-gK-hzp">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -197,6 +197,11 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="TUq-g3-c1Z"/>
+                    <connections>
+                        <outlet property="ballSpeedSlider" destination="TZ0-w4-ZOa" id="eQ6-iD-GIv"/>
+                        <outlet property="numberOfBallsSegmentedControl" destination="uMb-P8-v9x" id="slX-ty-b7u"/>
+                        <outlet property="paddleWidthSlider" destination="fCX-bj-sPC" id="n4q-cW-dUy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVH-8u-tJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
