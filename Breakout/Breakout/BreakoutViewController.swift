@@ -24,6 +24,43 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         static let PaddleBarrier = "Paddle"
     }
     
+    private let levels = [
+        "1,1,1,1:" +
+        "1,1,1,1:" +
+        "1,1,1,1:" +
+        "1,1,1,1:" +
+        "1,1,1,1:" +
+        "1,1,1,1:",
+        
+        "2,2,2,2:" +
+        "1,1,1,1:" +
+        "2,2,2,2:" +
+        "1,1,1,1:" +
+        "2,2,2,2:" +
+        "1,1,1,1:",
+        
+        "0,1,2,1,0:" +
+        "1,0,1,0,1:" +
+        "2,1,2,1,2:" +
+        "1,2,1,2,1:" +
+        "2,0,2,0,2:" +
+        "0,1,2,1,0:",
+        
+        "2,2,2,2,2:" +
+        "2,2,2,2,2:" +
+        "2,2,2,2,2:" +
+        "2,2,2,2,2:" +
+        "2,2,2,2,2:" +
+        "2,2,2,2,2:",
+        
+        "3,3,3,3,3:" +
+        "3,2,2,2,3:" +
+        "3,2,3,2,3:" +
+        "3,2,3,2,3:" +
+        "3,2,2,2,3:" +
+        "3,3,3,3,3:"
+        ]
+    
     lazy var animator: UIDynamicAnimator = {
         let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self.gameView)
         lazilyCreatedDynamitAnimator.delegate = self
@@ -32,8 +69,8 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     
     let breakoutBehavior = BreakoutBehavior()
     var gameState = GameState.Initial
-    let bricksPerRow = 4
-    let numberOfRows = 6
+    var bricksPerRow: Int?
+    var numberOfRows: Int?
     let brickPadding = 5
     var paddle: PaddleView? {
         didSet {
@@ -45,6 +82,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     var balls = [BallView]()
     var bricks = [Int:BrickView]()
     var lastCollidedItem: NSCopying?
+    private var currentLevel = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,8 +126,8 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     
     var brickSize: CGSize {
-        let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
-        let height = (gameView.bounds.size.height / 3 / CGFloat(numberOfRows)) - (2 * CGFloat(brickPadding))
+        let width = (gameView.bounds.size.width / CGFloat(bricksPerRow!)) - CGFloat(2 * brickPadding )
+        let height = (gameView.bounds.size.height / 3 / CGFloat(numberOfRows!)) - (2 * CGFloat(brickPadding))
         return CGSize(width: width, height: height)
     }
     
@@ -106,7 +144,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     
     func removeBricks() {
-        for var i = 0; i < self.bricks.count; i++ {
+        for var i = 0; i < self.numberOfRows! * self.bricksPerRow!; i++ {
             if let brick = self.bricks[i] {
                 brick.removeFromSuperview()
                 self.breakoutBehavior.removeBrick(brick)
@@ -154,8 +192,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     
     func addBricks() {
-        for var rowNumber = 0; rowNumber < numberOfRows; rowNumber++ {
-            addRow(rowNumber)
+        var rows = split(self.levels[self.currentLevel]) {$0 == ":"}
+        self.numberOfRows = rows.count
+        for var rowNumber = 0; rowNumber < self.numberOfRows!; rowNumber++ {
+            addRow(rowNumber, rowString: rows[rowNumber])
         }
     }
     
@@ -167,19 +207,23 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         }
     }
     
-    func addRow(rowNumber: Int) {
-        let size = brickSize
-        for var brickNumber = 0; brickNumber < bricksPerRow; brickNumber++ {
+    func addRow(rowNumber: Int, rowString: String) {
+        let brickInfo = split(rowString) {$0 == ","}
+        self.bricksPerRow = brickInfo.count
+        let size = self.brickSize
+        
+        for var brickNumber = 0; brickNumber < brickInfo.count; brickNumber++ {
+            if brickInfo[brickNumber] != "0" {
             let x = (CGFloat(brickNumber) * (size.width + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
             let y = (CGFloat(rowNumber) * (size.height + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
             let origin = CGPoint(x: x, y: y)
-            let brick = BrickView(frame: CGRect(origin: origin, size: size))
-            brick.backgroundColor = UIColor.random
+            let brick = BrickView(frame: CGRect(origin: origin, size: size), health: brickInfo[brickNumber].toInt()!)
             
-            let brickId = brickNumber + (bricksPerRow * rowNumber)
+            let brickId = brickNumber + (brickInfo.count * rowNumber)
             bricks[brickId] = brick
             breakoutBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: brickId)
             self.breakoutBehavior.addBrick(brick)
+            }
         }
     }
     
@@ -187,7 +231,11 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         if(identifier !== lastCollidedItem || lastCollidedItem === nil) {
             lastCollidedItem = identifier
             if let index = identifier as? Int {
-                removeBrickAtIndex(index)
+                let brick = bricks[index]
+                brick!.setNewHealth(brick!.health - 1)
+                if brick?.health <= 0 {
+                    removeBrickAtIndex(index)
+                }
             } else if let pathName = identifier as? String {
                 if pathName == PathNames.BottomBarrier {
                     println("You lost the game!")
@@ -207,19 +255,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
 private extension CGFloat {
     static func random(max: Int) -> CGFloat {
         return CGFloat(arc4random() % UInt32(max))
-    }
-}
-
-private extension UIColor {
-    class var random: UIColor {
-        switch arc4random()%5 {
-        case 0: return UIColor.greenColor()
-        case 1: return UIColor.blueColor()
-        case 2: return UIColor.orangeColor()
-        case 3: return UIColor.redColor()
-        case 4: return UIColor.purpleColor()
-        default: return UIColor.blackColor()
-        }
     }
 }
 
