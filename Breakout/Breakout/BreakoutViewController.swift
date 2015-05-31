@@ -82,7 +82,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     var balls = [BallView]()
     var bricks = [Int:BrickView]()
     var lastCollidedItem: NSCopying?
-    private var currentLevel = 2
+    private var currentLevel = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,7 +151,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                 self.breakoutBehavior.removeBarrier(named: i)
             }
         }
-        self.bricks.removeAll(keepCapacity: true)
+        
+        if self.bricks.count > 0 {
+            self.bricks.removeAll(keepCapacity: true)
+        }
     }
     
     func removeBalls() {
@@ -235,6 +238,12 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                 brick!.setNewHealth(brick!.health - 1)
                 if brick?.health <= 0 {
                     removeBrickAtIndex(index)
+                    bricks.removeValueForKey(index)
+                    
+                    if bricks.count == 0 {
+                        self.currentLevel++
+                        self.reloadGame()
+                    }
                 }
             } else if let pathName = identifier as? String {
                 if pathName == PathNames.BottomBarrier {
