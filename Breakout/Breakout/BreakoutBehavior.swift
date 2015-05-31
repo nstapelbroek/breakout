@@ -56,6 +56,11 @@ class BreakoutBehavior: UIDynamicBehavior {
         }
         addChildBehavior(push)
     }
+    
+    func removeBall(ball: BallView) {
+        collider.removeItem(ball)
+        ballBehavior.removeItem(ball)
+    }
 
     
     func addPaddle(paddle: PaddleView) {

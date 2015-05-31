@@ -55,11 +55,24 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if gameState == .Initial {
-            addBricks()
-            addPaddle()
-            addBalls()
+            loadGame()
             gameState = .Loaded
+        } else if gameState == .Paused {
+            let newSettings = BreakoutSettings.load()
+            if settings.description != newSettings.description {
+                settings = newSettings
+                self.reloadGame()
+                gameState = .Loaded
+            } else {
+                //TODO: Unpause the game
+            }
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        //TODO: Pause the game
+        gameState = GameState.Paused
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,6 +91,43 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         let width = (gameView.bounds.size.width / CGFloat(bricksPerRow)) - CGFloat(2 * brickPadding )
         let height = (gameView.bounds.size.height / 3 / CGFloat(numberOfRows)) - (2 * CGFloat(brickPadding))
         return CGSize(width: width, height: height)
+    }
+    
+    func reloadGame() {
+        self.removePaddle()
+        self.removeBricks()
+        self.removeBalls()
+        self.loadGame()
+    }
+    
+    func removePaddle() {
+        self.paddle?.removeFromSuperview()
+        self.paddle = nil
+    }
+    
+    func removeBricks() {
+        for var i = 0; i < self.bricks.count; i++ {
+            if let brick = self.bricks[i] {
+                brick.removeFromSuperview()
+                self.breakoutBehavior.removeBrick(brick)
+                self.breakoutBehavior.removeBarrier(named: i)
+            }
+        }
+        self.bricks.removeAll(keepCapacity: true)
+    }
+    
+    func removeBalls() {
+        for ball in self.balls {
+            ball.removeFromSuperview()
+            self.breakoutBehavior.removeBall(ball)
+        }
+        self.balls.removeAll(keepCapacity: false)
+    }
+    
+    func loadGame() {
+        self.addBricks()
+        self.addPaddle()
+        self.addBalls()
     }
 
     func addPaddle() {

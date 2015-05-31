@@ -8,7 +8,14 @@
 
 import Foundation
 
-class BreakoutSettings {
+class BreakoutSettings: Printable {
+    
+    var description: String {
+        get {
+            return "{ paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!) }";
+        }
+    }
+    
     private struct DefaultNames {
         static let PaddleWidth = "PaddleWidth"
         static let BallSpeed = "BallSpeed"
