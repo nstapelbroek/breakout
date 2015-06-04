@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class BezierPathsView: UIView {
+class BreakoutView: UIView {
     
     private var bezierPaths = [String:UIBezierPath]()
     

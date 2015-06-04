@@ -12,7 +12,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     
     private var settings = BreakoutSettings.load()
     
-    @IBOutlet weak var gameView: BezierPathsView!
+    @IBOutlet weak var gameView: BreakoutView!
     @IBOutlet weak var livesLabel: UILabel!
     
     var lives: Int {
