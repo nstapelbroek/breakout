@@ -30,6 +30,7 @@ class BreakoutSettings: Printable {
     var paddleWidth: Float?
     var ballSpeed: Float?
     var numberOfBalls: Int?
+    var ballWidth: Float? = 0.05
     
     //Private init to force use of the load function.
     private init() {}

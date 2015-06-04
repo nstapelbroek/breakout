@@ -129,10 +129,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         super.viewDidLayoutSubviews()
         var rect = gameView.bounds
         //Double the height to make the ball disappear when it hits the bottom of the screen
-        //rect.size.height *= 2
+        rect.size.height *= CGFloat(1 + 1.5 * settings.ballWidth!)
         breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: PathNames.BoxBarrier)
         
-        let bottomBarrierOrigin = CGPoint(x: 0, y: gameView.bounds.size.height)
+        let bottomBarrierOrigin = CGPoint(x: 0, y: rect.size.height)
         let bottomBarrierSize = CGSize(width: gameView.bounds.size.width, height: 1)
         breakoutBehavior.addBarrier(UIBezierPath(rect: CGRect(origin: bottomBarrierOrigin, size: bottomBarrierSize)), named: PathNames.BottomBarrier)
     }
@@ -196,16 +196,20 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     func addBalls() {
         for var i = 0; i < settings.numberOfBalls!; i++
         {
-            var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.ballSpeed!))
-            ball.backgroundColor = UIColor.orangeColor()
-            self.breakoutBehavior.addBall(ball)
-            self.breakoutBehavior.pushBall(ball, magnitude: settings.ballSpeed!)
-            self.balls.append(ball)
+            addBall()
         }
         
         if !balls.isEmpty {
             gameView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "push:"))
         }
+    }
+    
+    func addBall() {
+        var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.ballWidth!))
+        ball.backgroundColor = UIColor.orangeColor()
+        self.breakoutBehavior.addBall(ball)
+        self.breakoutBehavior.pushBall(ball, magnitude: settings.ballSpeed!)
+        self.balls.append(ball)
     }
     
     func addBricks() {
@@ -261,13 +265,20 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                 }
             } else if let pathName = identifier as? String {
                 if pathName == PathNames.BottomBarrier {
-                    var currentLives = self.lives
-                    currentLives--
-                    if currentLives == 0 {
-                        println("You lost the game!")
+                    if let ball = item as? BallView {
+                        if let index = find(self.balls, ball) {
+                            self.balls.removeAtIndex(index)
+                            self.breakoutBehavior.removeBall(ball)
+                        }
                     }
                     
-                    self.lives = currentLives
+                    if self.lives == 0 && self.balls.count == 0 {
+                        println("You lost the game!")
+                    } else if self.lives > 0 {
+                        self.lives--
+                        addBall()
+                    }
+                    
                 }
             }
         }
