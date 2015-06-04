@@ -34,43 +34,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         static let PaddleBarrier = "Paddle"
     }
     
-    private let levels = [
-        "1,1,1,1:" +
-        "1,1,1,1:" +
-        "1,1,1,1:" +
-        "1,1,1,1:" +
-        "1,1,1,1:" +
-        "1,1,1,1:",
-        
-        "2,2,2,2:" +
-        "1,1,1,1:" +
-        "2,2,2,2:" +
-        "1,1,1,1:" +
-        "2,2,2,2:" +
-        "1,1,1,1:",
-        
-        "0,1,2,1,0:" +
-        "1,0,1,0,1:" +
-        "2,1,2,1,2:" +
-        "1,2,1,2,1:" +
-        "2,0,2,0,2:" +
-        "0,1,2,1,0:",
-        
-        "2,2,2,2,2:" +
-        "2,2,2,2,2:" +
-        "2,2,2,2,2:" +
-        "2,2,2,2,2:" +
-        "2,2,2,2,2:" +
-        "2,2,2,2,2:",
-        
-        "3,3,3,3,3:" +
-        "3,2,2,2,3:" +
-        "3,2,3,2,3:" +
-        "3,2,3,2,3:" +
-        "3,2,2,2,3:" +
-        "3,3,3,3,3:"
-        ]
-    
     lazy var animator: UIDynamicAnimator = {
         let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self.gameView)
         lazilyCreatedDynamitAnimator.delegate = self
@@ -79,9 +42,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     
     let breakoutBehavior = BreakoutBehavior()
     var gameState = GameState.Initial
-    var bricksPerRow: Int?
-    var numberOfRows: Int?
-    let brickPadding = 5
     var paddle: PaddleView? {
         didSet {
             if paddle != nil {
@@ -91,13 +51,12 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         }
     }
     var balls = [BallView]()
-    var bricks = [Int:BrickView]()
     var lastCollidedItem: NSCopying?
-    private var currentLevel = 0
     private var panGesture: UIPanGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.gameView.breakoutBehavior = self.breakoutBehavior
         animator.addBehavior(breakoutBehavior)
         breakoutBehavior.collisionDelegate = self
     }
@@ -137,15 +96,9 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         breakoutBehavior.addBarrier(UIBezierPath(rect: CGRect(origin: bottomBarrierOrigin, size: bottomBarrierSize)), named: PathNames.BottomBarrier)
     }
     
-    var brickSize: CGSize {
-        let width = (gameView.bounds.size.width / CGFloat(bricksPerRow!)) - CGFloat(2 * brickPadding )
-        let height = (gameView.bounds.size.height / 3 / CGFloat(numberOfRows!)) - (2 * CGFloat(brickPadding))
-        return CGSize(width: width, height: height)
-    }
-    
     func reloadGame() {
         self.removePaddle()
-        self.removeBricks()
+        self.gameView.removeBricks()
         self.removeBalls()
         self.loadGame()
     }
@@ -157,20 +110,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         self.paddle = nil
     }
     
-    func removeBricks() {
-        for var i = 0; i < self.numberOfRows! * self.bricksPerRow!; i++ {
-            if let brick = self.bricks[i] {
-                brick.removeFromSuperview()
-                self.breakoutBehavior.removeBrick(brick)
-                self.breakoutBehavior.removeBarrier(named: i)
-            }
-        }
-        
-        if self.bricks.count > 0 {
-            self.bricks.removeAll(keepCapacity: true)
-        }
-    }
-    
     func removeBalls() {
         for ball in self.balls {
             ball.removeFromSuperview()
@@ -180,7 +119,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     
     func loadGame() {
-        self.addBricks()
+        self.gameView.addBricks()
         self.addPaddle()
         self.addBalls()
     }
@@ -212,13 +151,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         self.balls.append(ball)
     }
     
-    func addBricks() {
-        var rows = split(self.levels[self.currentLevel]) {$0 == ":"}
-        self.numberOfRows = rows.count
-        for var rowNumber = 0; rowNumber < self.numberOfRows!; rowNumber++ {
-            addRow(rowNumber, rowString: rows[rowNumber])
-        }
-    }
+    
     
     func push(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
@@ -228,38 +161,18 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         }
     }
     
-    func addRow(rowNumber: Int, rowString: String) {
-        let brickInfo = split(rowString) {$0 == ","}
-        self.bricksPerRow = brickInfo.count
-        let size = self.brickSize
-        
-        for var brickNumber = 0; brickNumber < brickInfo.count; brickNumber++ {
-            if brickInfo[brickNumber] != "0" {
-            let x = (CGFloat(brickNumber) * (size.width + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
-            let y = (CGFloat(rowNumber) * (size.height + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
-            let origin = CGPoint(x: x, y: y)
-            let brick = BrickView(frame: CGRect(origin: origin, size: size), health: brickInfo[brickNumber].toInt()!)
-            
-            let brickId = brickNumber + (brickInfo.count * rowNumber)
-            bricks[brickId] = brick
-            breakoutBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: brickId)
-            self.breakoutBehavior.addBrick(brick)
-            }
-        }
-    }
-    
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
         if(identifier !== lastCollidedItem || lastCollidedItem === nil) {
             lastCollidedItem = identifier
             if let index = identifier as? Int {
-                let brick = bricks[index]
+                let brick = self.gameView.bricks[index]
                 brick!.setNewHealth(brick!.health - 1)
                 if brick?.health <= 0 {
-                    removeBrickAtIndex(index)
-                    bricks.removeValueForKey(index)
+                    self.gameView.removeBrickAtIndex(index)
+                    self.gameView.bricks.removeValueForKey(index)
                     
-                    if bricks.count == 0 {
-                        self.currentLevel++
+                    if self.gameView.bricks.count == 0 {
+                        self.gameView.currentLevel++
                         self.reloadGame()
                     }
                 }
@@ -281,13 +194,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                     
                 }
             }
-        }
-    }
-    
-    func removeBrickAtIndex(index: Int) {
-        if let brick = bricks[index] {
-            breakoutBehavior.removeBrick(brick)
-            breakoutBehavior.removeBarrier(named: index)
         }
     }
 }
