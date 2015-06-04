@@ -11,7 +11,7 @@ import UIKit
 class BallView: UIView {
 
     init(gameFrame: CGSize, maxWidth: CGFloat) {
-        let width = gameFrame.width / 20
+        let width = gameFrame.width * maxWidth
         let size = CGSize(width: width, height: width)
         let x = (gameFrame.width - width) / 2
         let y = (gameFrame.height + width) / 2

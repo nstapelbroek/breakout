@@ -12,7 +12,7 @@ class BreakoutSettings: Printable {
     
     var description: String {
         get {
-            return "{ paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!) }";
+            return "{ paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!), ballWidth: \(self.ballWidth) }";
         }
     }
     
@@ -20,17 +20,19 @@ class BreakoutSettings: Printable {
         static let PaddleWidth = "PaddleWidth"
         static let BallSpeed = "BallSpeed"
         static let NumberOfBalls = "NumberOfBalls"
+        static let BallWidth = "BallWidth"
         static let FirstLoad = "FirstLoad"
     }
     
     private static let defaultPaddleWidth: Float = 0.20
     private static let defaultBallSpeed: Float = 0.05
     private static let defaultNumberOfBalls: Int = 1
+    private static let defaultBallWidth: Float = 0.05
     
     var paddleWidth: Float?
     var ballSpeed: Float?
     var numberOfBalls: Int?
-    var ballWidth: Float? = 0.05
+    var ballWidth: Float?
     
     //Private init to force use of the load function.
     private init() {}
@@ -49,6 +51,7 @@ class BreakoutSettings: Printable {
         settings.paddleWidth = defaults.floatForKey(DefaultNames.PaddleWidth)
         settings.ballSpeed = defaults.floatForKey(DefaultNames.BallSpeed)
         settings.numberOfBalls = defaults.integerForKey(DefaultNames.NumberOfBalls)
+        settings.ballWidth = defaults.floatForKey(DefaultNames.BallWidth)
         return settings;
     }
     
@@ -57,6 +60,7 @@ class BreakoutSettings: Printable {
         defaults.setFloat(defaultPaddleWidth, forKey: DefaultNames.PaddleWidth)
         defaults.setFloat(defaultBallSpeed, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(defaultNumberOfBalls, forKey: DefaultNames.NumberOfBalls)
+        defaults.setFloat(defaultBallWidth, forKey: DefaultNames.BallWidth)
         return defaults
     }
     
@@ -65,5 +69,6 @@ class BreakoutSettings: Printable {
         defaults.setFloat(self.paddleWidth!, forKey: DefaultNames.PaddleWidth)
         defaults.setFloat(self.ballSpeed!, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
+        defaults.setFloat(self.ballWidth!, forKey: DefaultNames.BallWidth)
     }
 }

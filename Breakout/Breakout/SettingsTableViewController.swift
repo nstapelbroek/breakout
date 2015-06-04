@@ -13,6 +13,7 @@ class SettingsTableViewController: UITableViewController {
     private let settings = BreakoutSettings.load()
 
     @IBOutlet weak var paddleWidthSlider: UISlider!
+    @IBOutlet weak var ballWidthSlider: UISlider!
     @IBOutlet weak var ballSpeedSlider: UISlider!
     @IBOutlet weak var numberOfBallsSegmentedControl: UISegmentedControl!
     
@@ -30,6 +31,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         paddleWidthSlider.setValue(settings.paddleWidth!, animated: false)
+        ballWidthSlider.setValue(settings.ballWidth!, animated: false)
         ballSpeedSlider.setValue(settings.ballSpeed!, animated: false)
         numberOfBalls = settings.numberOfBalls!
         
@@ -44,6 +46,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewWillDisappear(animated)
         
         settings.paddleWidth = paddleWidthSlider.value
+        settings.ballWidth = ballWidthSlider.value
         settings.ballSpeed = ballSpeedSlider.value
         settings.numberOfBalls = numberOfBalls
         settings.save()
@@ -65,7 +68,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 3
+        return 4
     }
 
     /*

@@ -117,6 +117,47 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BallWidth" rowHeight="77" id="t0a-1u-g3F">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t0a-1u-g3F" id="Yex-g8-1cv">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Ball width:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L67-zY-3gM">
+                                                    <rect key="frame" x="8" y="8" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dmi-2l-IFG">
+                                                    <rect key="frame" x="6" y="38" width="588" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="114" id="fBJ-rn-YZP"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="fBJ-rn-YZP"/>
+                                                        </mask>
+                                                    </variation>
+                                                </slider>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="L67-zY-3gM" firstAttribute="centerY" secondItem="Yex-g8-1cv" secondAttribute="centerY" id="F4m-gu-Pyc"/>
+                                                <constraint firstItem="L67-zY-3gM" firstAttribute="top" secondItem="Yex-g8-1cv" secondAttribute="topMargin" id="PNa-5Q-sxZ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Dmi-2l-IFG" secondAttribute="trailing" id="aVk-yU-j9R"/>
+                                                <constraint firstItem="Dmi-2l-IFG" firstAttribute="leading" secondItem="L67-zY-3gM" secondAttribute="trailing" constant="189" id="cVi-fj-ive"/>
+                                                <constraint firstItem="Dmi-2l-IFG" firstAttribute="leading" secondItem="Yex-g8-1cv" secondAttribute="leadingMargin" id="dDW-Rs-t6a"/>
+                                                <constraint firstItem="L67-zY-3gM" firstAttribute="trailing" secondItem="Yex-g8-1cv" secondAttribute="trailingMargin" id="eHo-ZC-wli"/>
+                                                <constraint firstItem="Dmi-2l-IFG" firstAttribute="bottom" secondItem="Yex-g8-1cv" secondAttribute="bottomMargin" id="pT6-EZ-FjZ"/>
+                                                <constraint firstItem="L67-zY-3gM" firstAttribute="leading" secondItem="Yex-g8-1cv" secondAttribute="leadingMargin" id="zbl-S0-i4j"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="F4m-gu-Pyc"/>
+                                                    <exclude reference="cVi-fj-ive"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BallSpeed" rowHeight="77" id="zhk-Gc-xHT">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zhk-Gc-xHT" id="olG-gw-pwD">
@@ -223,6 +264,7 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="TUq-g3-c1Z"/>
                     <connections>
                         <outlet property="ballSpeedSlider" destination="TZ0-w4-ZOa" id="eQ6-iD-GIv"/>
+                        <outlet property="ballWidthSlider" destination="Dmi-2l-IFG" id="3Fi-DW-bOI"/>
                         <outlet property="numberOfBallsSegmentedControl" destination="uMb-P8-v9x" id="slX-ty-b7u"/>
                         <outlet property="paddleWidthSlider" destination="fCX-bj-sPC" id="n4q-cW-dUy"/>
                     </connections>
