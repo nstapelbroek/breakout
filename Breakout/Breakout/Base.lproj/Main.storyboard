@@ -21,7 +21,30 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RA1-8L-qcs" customClass="BezierPathsView" customModule="Breakout" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lives:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWL-wD-24k">
+                                        <rect key="frame" x="8" y="510" width="45" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMs-ne-4gq">
+                                        <rect key="frame" x="61" y="510" width="42" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="rEY-4w-Zcw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="xMs-ne-4gq" firstAttribute="leading" secondItem="dWL-wD-24k" secondAttribute="trailing" constant="8" symbolic="YES" id="PcT-bH-am9"/>
+                                    <constraint firstItem="dWL-wD-24k" firstAttribute="baseline" secondItem="xMs-ne-4gq" secondAttribute="baseline" id="Zau-n8-AA5"/>
+                                    <constraint firstAttribute="bottom" secondItem="xMs-ne-4gq" secondAttribute="bottom" id="rEZ-Qr-rib"/>
+                                    <constraint firstItem="dWL-wD-24k" firstAttribute="leading" secondItem="RA1-8L-qcs" secondAttribute="leadingMargin" id="zhX-Rj-QaS"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -35,6 +58,7 @@
                     <tabBarItem key="tabBarItem" title="Breakout" image="Breakout" id="duM-Co-fuq"/>
                     <connections>
                         <outlet property="gameView" destination="RA1-8L-qcs" id="dbf-hA-3BC"/>
+                        <outlet property="livesLabel" destination="xMs-ne-4gq" id="WL2-3d-bvm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

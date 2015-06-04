@@ -13,6 +13,16 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     private var settings = BreakoutSettings.load()
     
     @IBOutlet weak var gameView: BezierPathsView!
+    @IBOutlet weak var livesLabel: UILabel!
+    
+    var lives: Int {
+        get {
+            return livesLabel!.text!.toInt()!
+        }
+        set {
+            livesLabel?.text = "\(newValue)"
+        }
+    }
 
     enum GameState: Int {
         case Initial = 0, Loaded, Playing, Paused, Finished
@@ -251,7 +261,13 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                 }
             } else if let pathName = identifier as? String {
                 if pathName == PathNames.BottomBarrier {
-                    println("You lost the game!")
+                    var currentLives = self.lives
+                    currentLives--
+                    if currentLives == 0 {
+                        println("You lost the game!")
+                    }
+                    
+                    self.lives = currentLives
                 }
             }
         }
