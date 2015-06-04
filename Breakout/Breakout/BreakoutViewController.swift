@@ -75,7 +75,8 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     var paddle: PaddleView? {
         didSet {
             if paddle != nil {
-                gameView?.addGestureRecognizer(UIPanGestureRecognizer(target: paddle!, action: "move:"))
+                self.panGesture = UIPanGestureRecognizer(target: paddle!, action: "move:")
+                gameView?.addGestureRecognizer(self.panGesture!)
             }
         }
     }
@@ -83,6 +84,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     var bricks = [Int:BrickView]()
     var lastCollidedItem: NSCopying?
     private var currentLevel = 0
+    private var panGesture: UIPanGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +142,8 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     
     func removePaddle() {
         self.paddle?.removeFromSuperview()
+        self.gameView.removeGestureRecognizer(self.panGesture!)
+        self.panGesture = nil
         self.paddle = nil
     }
     
@@ -185,7 +189,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
             var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.ballSpeed!))
             ball.backgroundColor = UIColor.orangeColor()
             self.breakoutBehavior.addBall(ball)
-            self.breakoutBehavior.pushBall(ball)
+            self.breakoutBehavior.pushBall(ball, magnitude: settings.ballSpeed!)
             self.balls.append(ball)
         }
         
@@ -205,7 +209,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     func push(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
             for ball in self.balls {
-                self.breakoutBehavior.pushBall(ball)
+                self.breakoutBehavior.pushBall(ball, magnitude: settings.ballSpeed!)
             }
         }
     }

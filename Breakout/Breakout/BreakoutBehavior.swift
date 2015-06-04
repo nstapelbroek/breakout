@@ -43,9 +43,9 @@ class BreakoutBehavior: UIDynamicBehavior {
         ballBehavior.addItem(ball)
     }
     
-    func pushBall(ball: UIView) {
+    func pushBall(ball: UIView, magnitude: Float) {
         let push = UIPushBehavior(items: [ball], mode: .Instantaneous)
-        push.magnitude = 0.1
+        push.magnitude = CGFloat(magnitude)
         
         push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
         push.action = { [weak push] in
@@ -72,7 +72,7 @@ class BreakoutBehavior: UIDynamicBehavior {
     }
     
     func removeBrick(brick: BrickView) {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut,
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.TransitionFlipFromBottom,
             animations: {
                 let property = brick.getRandomProperty()
                 switch property {
