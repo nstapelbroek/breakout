@@ -91,15 +91,9 @@
 		28D7A87F1B09E1620077C2C8 /* Breakout */ = {
 			isa = PBXGroup;
 			children = (
+				F461E8C41B22D7970056C3FD /* BreakoutMVC */,
+				F461E8C71B22D7F80056C3FD /* SettingsMVC */,
 				28D7A8821B09E1620077C2C8 /* AppDelegate.swift */,
-				F4B2CA051B1AFBF90069EFCD /* BreakoutSettings.swift */,
-				28D7A8841B09E1620077C2C8 /* BreakoutViewController.swift */,
-				F41EB9CB1B0B71E000E03D3A /* BreakoutBehavior.swift */,
-				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
-				28D7A8AA1B09E5BE0077C2C8 /* BreakoutView.swift */,
-				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
-				F4041DAA1B0B52E30075AC2C /* PaddleView.swift */,
-				28D7A8AC1B09E8980077C2C8 /* BrickView.swift */,
 				28D7A8861B09E1620077C2C8 /* Main.storyboard */,
 				28D7A8801B09E1620077C2C8 /* Supporting Files */,
 			);
@@ -131,6 +125,60 @@
 				28D7A8971B09E1620077C2C8 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F461E8C41B22D7970056C3FD /* BreakoutMVC */ = {
+			isa = PBXGroup;
+			children = (
+				F461E8C61B22D7CA0056C3FD /* Controller */,
+				F461E8C51B22D7A50056C3FD /* View */,
+			);
+			name = BreakoutMVC;
+			sourceTree = "<group>";
+		};
+		F461E8C51B22D7A50056C3FD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
+				F41EB9CB1B0B71E000E03D3A /* BreakoutBehavior.swift */,
+				28D7A8AA1B09E5BE0077C2C8 /* BreakoutView.swift */,
+				28D7A8AC1B09E8980077C2C8 /* BrickView.swift */,
+				F4041DAA1B0B52E30075AC2C /* PaddleView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		F461E8C61B22D7CA0056C3FD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				28D7A8841B09E1620077C2C8 /* BreakoutViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		F461E8C71B22D7F80056C3FD /* SettingsMVC */ = {
+			isa = PBXGroup;
+			children = (
+				F461E8C91B22D8130056C3FD /* Controller */,
+				F461E8C81B22D8080056C3FD /* Model */,
+			);
+			name = SettingsMVC;
+			sourceTree = "<group>";
+		};
+		F461E8C81B22D8080056C3FD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F4B2CA051B1AFBF90069EFCD /* BreakoutSettings.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F461E8C91B22D8130056C3FD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
