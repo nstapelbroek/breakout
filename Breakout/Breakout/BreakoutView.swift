@@ -11,8 +11,7 @@ import UIKit
 @IBDesignable
 class BreakoutView: UIView {
     
-    // MARK: - General variables
-    private var bezierPaths = [String:UIBezierPath]()
+    // MARK: - Behavior variables
     var breakoutBehavior: BreakoutBehavior?
     struct PathNames {
         static let BoxBarrier = "Box"
@@ -87,18 +86,6 @@ class BreakoutView: UIView {
         }
     }
     var paddleWidth: Float = 0.40
-    
-    // MARK: - Drawing
-    func setPath(path: UIBezierPath?, named name: String) {
-        bezierPaths[name] = path
-        setNeedsDisplay()
-    }
-    
-    override func drawRect(rect: CGRect) {
-        for(_, path) in bezierPaths {
-            path.stroke()
-        }
-    }
     
     // MARK: - Bricks
     func addBricks() {
