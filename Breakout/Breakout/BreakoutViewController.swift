@@ -16,6 +16,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                 self.gameView?.ballWidth = self.settings!.ballWidth!
                 self.gameView?.ballSpeed = self.settings!.ballSpeed!
                 self.gameView?.numberOfBalls = self.settings!.numberOfBalls!
+                self.gameView?.paddleWidth = self.settings!.paddleWidth!
             }
         }
     }
@@ -50,16 +51,8 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     
     let breakoutBehavior = BreakoutBehavior()
     var gameState = GameState.Initial
-    var paddle: PaddleView? {
-        didSet {
-            if paddle != nil {
-                self.panGesture = UIPanGestureRecognizer(target: paddle!, action: "move:")
-                gameView?.addGestureRecognizer(self.panGesture!)
-            }
-        }
-    }
+    
     var lastCollidedItem: NSCopying?
-    private var panGesture: UIPanGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,31 +99,16 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
     
     func reloadGame() {
-        self.removePaddle()
+        self.gameView.removePaddle()
         self.gameView.removeBricks()
         self.gameView.removeBalls()
         self.loadGame()
     }
-    
-    func removePaddle() {
-        self.paddle?.removeFromSuperview()
-        self.gameView.removeGestureRecognizer(self.panGesture!)
-        self.panGesture = nil
-        self.paddle = nil
-    }
-    
+        
     func loadGame() {
         self.gameView.addBricks()
-        self.addPaddle()
+        self.gameView.addPaddle()
         self.gameView.addBalls()
-    }
-
-    func addPaddle() {
-        paddle = PaddleView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings!.paddleWidth!))
-        paddle?.backgroundColor = UIColor.blackColor()
-        breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
-        self.breakoutBehavior.addPaddle(paddle!)
-        paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
     }
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {

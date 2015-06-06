@@ -11,6 +11,17 @@ import UIKit
 @IBDesignable
 class BreakoutView: UIView {
     
+    // MARK: - General variables
+    private var bezierPaths = [String:UIBezierPath]()
+    var breakoutBehavior: BreakoutBehavior?
+    struct PathNames {
+        static let BoxBarrier = "Box"
+        static let BottomBarrier = "Bottom"
+        static let PaddleBarrier = "Paddle"
+    }
+    
+    // MARK: - Level variables
+    var currentLevel = 0
     private let levels = [
         "1,1,1,1:" +
         "1,1,1,1:" +
@@ -48,25 +59,36 @@ class BreakoutView: UIView {
         "3,3,3,3,3:"
     ]
     
-    private var bezierPaths = [String:UIBezierPath]()
-    
+    // MARK: - Brick variables
     var bricksPerRow: Int?
     var numberOfRows: Int?
     let brickPadding = 5
-    var currentLevel = 0
-    var breakoutBehavior: BreakoutBehavior?
     var bricks = [Int:BrickView]()
-    var balls = [BallView]()
-    var ballSpeed: Float = 0.50
-    var ballWidth: Float = 0.05
-    var numberOfBalls: Int = 1
-    
     var brickSize: CGSize {
         let width = (self.bounds.size.width / CGFloat(bricksPerRow!)) - CGFloat(2 * brickPadding )
         let height = (self.bounds.size.height / 3 / CGFloat(numberOfRows!)) - (2 * CGFloat(brickPadding))
         return CGSize(width: width, height: height)
     }
     
+    // MARK: - Ball variables
+    var balls = [BallView]()
+    var ballSpeed: Float = 0.50
+    var ballWidth: Float = 0.05
+    var numberOfBalls: Int = 1
+    
+    // MARK: - Paddle variables
+    private var panGesture: UIPanGestureRecognizer?
+    var paddle: PaddleView? {
+        didSet {
+            if paddle != nil {
+                self.panGesture = UIPanGestureRecognizer(target: paddle!, action: "move:")
+                self.addGestureRecognizer(self.panGesture!)
+            }
+        }
+    }
+    var paddleWidth: Float = 0.40
+    
+    // MARK: - Drawing
     func setPath(path: UIBezierPath?, named name: String) {
         bezierPaths[name] = path
         setNeedsDisplay()
@@ -78,6 +100,7 @@ class BreakoutView: UIView {
         }
     }
     
+    // MARK: - Bricks
     func addBricks() {
         var rows = split(self.levels[self.currentLevel]) {$0 == ":"}
         self.numberOfRows = rows.count
@@ -127,8 +150,7 @@ class BreakoutView: UIView {
         }
     }
     
-    
-    
+    // MARK: - Balls
     func addBalls() {
         for var i = 0; i < numberOfBalls; i++
         {
@@ -169,4 +191,22 @@ class BreakoutView: UIView {
             }
         }
     }
+    
+    // MARK: - Paddle
+    func removePaddle() {
+        self.paddle?.removeFromSuperview()
+        self.removeGestureRecognizer(self.panGesture!)
+        self.panGesture = nil
+        self.paddle = nil
+    }
+    
+    
+    func addPaddle() {
+        paddle = PaddleView(gameFrame: self.bounds.size, maxWidth: CGFloat(self.paddleWidth))
+        paddle?.backgroundColor = UIColor.blackColor()
+        breakoutBehavior?.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
+        self.breakoutBehavior?.addPaddle(paddle!)
+        paddle!.setBreakoutBehavior(breakoutBehavior!, withPathName: PathNames.PaddleBarrier)
+    }
+
 }
