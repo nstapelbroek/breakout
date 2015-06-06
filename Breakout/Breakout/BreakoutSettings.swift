@@ -29,10 +29,28 @@ class BreakoutSettings: Printable {
     private static let defaultNumberOfBalls: Int = 1
     private static let defaultBallWidth: Float = 0.05
     
-    var paddleWidth: Float?
-    var ballSpeed: Float?
+    var paddleWidth: Float? {
+        didSet {
+            if self.paddleWidth == 0.0 {
+                self.paddleWidth = 0.01
+            }
+        }
+    }
+    var ballSpeed: Float? {
+        didSet {
+            if self.ballSpeed == 0.0 {
+                self.ballSpeed = 0.01
+            }
+        }
+    }
     var numberOfBalls: Int?
-    var ballWidth: Float?
+    var ballWidth: Float? {
+        didSet {
+            if self.ballWidth == 0.0 {
+                self.ballWidth = 0.01
+            }
+        }
+    }
     
     //Private init to force use of the load function.
     private init() {}
