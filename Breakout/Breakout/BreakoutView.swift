@@ -47,7 +47,7 @@ class BreakoutView: UIView {
         "3,2,2,2,3:" +
         "3,3,3,3,3:"
     ]
-
+    
     private var bezierPaths = [String:UIBezierPath]()
     
     var bricksPerRow: Int?
@@ -56,6 +56,10 @@ class BreakoutView: UIView {
     var currentLevel = 0
     var breakoutBehavior: BreakoutBehavior?
     var bricks = [Int:BrickView]()
+    var balls = [BallView]()
+    var ballSpeed: Float = 0.50
+    var ballWidth: Float = 0.05
+    var numberOfBalls: Int = 1
     
     var brickSize: CGSize {
         let width = (self.bounds.size.width / CGFloat(bricksPerRow!)) - CGFloat(2 * brickPadding )
@@ -120,6 +124,49 @@ class BreakoutView: UIView {
         if let brick = bricks[index] {
             breakoutBehavior!.removeBrick(brick)
             breakoutBehavior!.removeBarrier(named: index)
+        }
+    }
+    
+    
+    
+    func addBalls() {
+        for var i = 0; i < numberOfBalls; i++
+        {
+            addBall()
+        }
+        
+        if !balls.isEmpty {
+            addGestureRecognizer(UITapGestureRecognizer(target: self, action: "push:"))
+        }
+    }
+    
+    func addBall() {
+        if self.breakoutBehavior != nil {
+            var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth))
+            ball.backgroundColor = UIColor.orangeColor()
+            self.breakoutBehavior!.addBall(ball)
+            self.breakoutBehavior!.pushBall(ball, magnitude: self.ballSpeed)
+            self.balls.append(ball)
+        }
+    }
+    
+    func removeBalls() {
+        if self.breakoutBehavior != nil {
+            for ball in self.balls {
+                ball.removeFromSuperview()
+                self.breakoutBehavior!.removeBall(ball)
+            }
+            self.balls.removeAll(keepCapacity: false)
+        }
+    }
+    
+    func push(gesture: UITapGestureRecognizer) {
+        if gesture.state == .Ended {
+            if self.breakoutBehavior != nil {
+                for ball in self.balls {
+                    self.breakoutBehavior!.pushBall(ball, magnitude: ballSpeed)
+                }
+            }
         }
     }
 }

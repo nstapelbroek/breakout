@@ -10,7 +10,15 @@ import UIKit
 
 class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate {
     
-    private var settings = BreakoutSettings.load()
+    private var settings: BreakoutSettings? {
+        didSet {
+            if settings != nil {
+                self.gameView?.ballWidth = self.settings!.ballWidth!
+                self.gameView?.ballSpeed = self.settings!.ballSpeed!
+                self.gameView?.numberOfBalls = self.settings!.numberOfBalls!
+            }
+        }
+    }
     
     @IBOutlet weak var gameView: BreakoutView!
     @IBOutlet weak var livesLabel: UILabel!
@@ -50,7 +58,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
             }
         }
     }
-    var balls = [BallView]()
     var lastCollidedItem: NSCopying?
     private var panGesture: UIPanGestureRecognizer?
     
@@ -59,6 +66,8 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         self.gameView.breakoutBehavior = self.breakoutBehavior
         animator.addBehavior(breakoutBehavior)
         breakoutBehavior.collisionDelegate = self
+        
+        self.settings = BreakoutSettings.load()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -68,7 +77,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
             gameState = .Loaded
         } else if gameState == .Paused {
             let newSettings = BreakoutSettings.load()
-            if settings.description != newSettings.description {
+            if settings?.description != newSettings.description {
                 settings = newSettings
                 self.reloadGame()
                 gameState = .Loaded
@@ -88,7 +97,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         super.viewDidLayoutSubviews()
         var rect = gameView.bounds
         //Double the height to make the ball disappear when it hits the bottom of the screen
-        rect.size.height *= CGFloat(1 + 1.5 * settings.ballWidth!)
+        rect.size.height *= CGFloat(1 + 1.5 * settings!.ballWidth!)
         breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: PathNames.BoxBarrier)
         
         let bottomBarrierOrigin = CGPoint(x: 0, y: rect.size.height)
@@ -99,7 +108,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     func reloadGame() {
         self.removePaddle()
         self.gameView.removeBricks()
-        self.removeBalls()
+        self.gameView.removeBalls()
         self.loadGame()
     }
     
@@ -110,55 +119,18 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         self.paddle = nil
     }
     
-    func removeBalls() {
-        for ball in self.balls {
-            ball.removeFromSuperview()
-            self.breakoutBehavior.removeBall(ball)
-        }
-        self.balls.removeAll(keepCapacity: false)
-    }
-    
     func loadGame() {
         self.gameView.addBricks()
         self.addPaddle()
-        self.addBalls()
+        self.gameView.addBalls()
     }
 
     func addPaddle() {
-        paddle = PaddleView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.paddleWidth!))
+        paddle = PaddleView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings!.paddleWidth!))
         paddle?.backgroundColor = UIColor.blackColor()
         breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
         self.breakoutBehavior.addPaddle(paddle!)
         paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
-    }
-    
-    func addBalls() {
-        for var i = 0; i < settings.numberOfBalls!; i++
-        {
-            addBall()
-        }
-        
-        if !balls.isEmpty {
-            gameView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "push:"))
-        }
-    }
-    
-    func addBall() {
-        var ball = BallView(gameFrame: gameView.bounds.size, maxWidth: CGFloat(settings.ballWidth!))
-        ball.backgroundColor = UIColor.orangeColor()
-        self.breakoutBehavior.addBall(ball)
-        self.breakoutBehavior.pushBall(ball, magnitude: settings.ballSpeed!)
-        self.balls.append(ball)
-    }
-    
-    
-    
-    func push(gesture: UITapGestureRecognizer) {
-        if gesture.state == .Ended {
-            for ball in self.balls {
-                self.breakoutBehavior.pushBall(ball, magnitude: settings.ballSpeed!)
-            }
-        }
     }
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
@@ -179,17 +151,17 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
             } else if let pathName = identifier as? String {
                 if pathName == PathNames.BottomBarrier {
                     if let ball = item as? BallView {
-                        if let index = find(self.balls, ball) {
-                            self.balls.removeAtIndex(index)
+                        if let index = find(self.gameView.balls, ball) {
+                            self.gameView.balls.removeAtIndex(index)
                             self.breakoutBehavior.removeBall(ball)
                         }
                     }
                     
-                    if self.lives == 0 && self.balls.count == 0 {
+                    if self.lives == 0 && self.gameView.balls.count == 0 {
                         println("You lost the game!")
                     } else if self.lives > 0 {
                         self.lives--
-                        addBall()
+                        self.gameView.addBall()
                     }
                     
                 }
