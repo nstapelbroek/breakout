@@ -101,6 +101,16 @@ class BreakoutView: UIView {
         self.addBalls()
     }
     
+    func tryLoadNextLevel() -> Bool {
+        self.currentLevel++
+        if self.levels.count == self.currentLevel {
+            return true;
+        } else {
+            self.reloadGame()
+            return false;
+        }
+    }
+    
     // MARK: - Bricks
     func addBricks() {
         var rows = split(self.levels[self.currentLevel]) {$0 == ":"}

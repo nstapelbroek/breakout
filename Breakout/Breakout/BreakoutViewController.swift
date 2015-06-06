@@ -109,8 +109,10 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                     self.gameView.bricks.removeValueForKey(index)
                     
                     if self.gameView.bricks.count == 0 {
-                        self.gameView.currentLevel++
-                        self.gameView.reloadGame()
+                        let gameWon = self.gameView.tryLoadNextLevel()
+                        if gameWon {
+                            println("You won the game!")
+                        }
                     }
                 }
             } else if let pathName = identifier as? String {
