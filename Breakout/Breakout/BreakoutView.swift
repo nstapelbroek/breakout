@@ -87,6 +87,20 @@ class BreakoutView: UIView {
     }
     var paddleWidth: Float = 0.40
     
+    // MARK: - Loading
+    func reloadGame() {
+        self.removePaddle()
+        self.removeBricks()
+        self.removeBalls()
+        self.loadGame()
+    }
+    
+    func loadGame() {
+        self.addBricks()
+        self.addPaddle()
+        self.addBalls()
+    }
+    
     // MARK: - Bricks
     func addBricks() {
         var rows = split(self.levels[self.currentLevel]) {$0 == ":"}

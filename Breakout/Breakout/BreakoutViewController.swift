@@ -66,13 +66,13 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if gameState == .Initial {
-            loadGame()
+            self.gameView.loadGame()
             gameState = .Loaded
         } else if gameState == .Paused {
             let newSettings = BreakoutSettings.load()
             if settings?.description != newSettings.description {
                 settings = newSettings
-                self.reloadGame()
+                self.gameView.reloadGame()
                 gameState = .Loaded
             } else {
                 //TODO: Unpause the game
@@ -98,19 +98,6 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
         breakoutBehavior.addBarrier(UIBezierPath(rect: CGRect(origin: bottomBarrierOrigin, size: bottomBarrierSize)), named: PathNames.BottomBarrier)
     }
     
-    func reloadGame() {
-        self.gameView.removePaddle()
-        self.gameView.removeBricks()
-        self.gameView.removeBalls()
-        self.loadGame()
-    }
-        
-    func loadGame() {
-        self.gameView.addBricks()
-        self.gameView.addPaddle()
-        self.gameView.addBalls()
-    }
-    
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
         if(identifier !== lastCollidedItem || lastCollidedItem === nil) {
             lastCollidedItem = identifier
@@ -123,7 +110,7 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
                     
                     if self.gameView.bricks.count == 0 {
                         self.gameView.currentLevel++
-                        self.reloadGame()
+                        self.gameView.reloadGame()
                     }
                 }
             } else if let pathName = identifier as? String {
