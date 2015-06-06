@@ -137,9 +137,3 @@ class BreakoutViewController: UIViewController, UIDynamicAnimatorDelegate, UICol
     }
 }
 
-private extension CGFloat {
-    static func random(max: Int) -> CGFloat {
-        return CGFloat(arc4random() % UInt32(max))
-    }
-}
-
