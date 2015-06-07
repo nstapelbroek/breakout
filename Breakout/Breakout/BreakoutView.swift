@@ -9,15 +9,29 @@
 import UIKit
 
 @IBDesignable
-class BreakoutView: UIView {
+class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate {
     
     // MARK: - Behavior variables
-    var breakoutBehavior: BreakoutBehavior?
+    let breakoutBehavior = BreakoutBehavior()
     struct PathNames {
         static let BoxBarrier = "Box"
         static let BottomBarrier = "Bottom"
         static let PaddleBarrier = "Paddle"
     }
+    var lives = 5
+    enum GameState: Int {
+        case Initial = 0, Loaded, Playing, Paused, Finished
+    }
+    
+    lazy var animator: UIDynamicAnimator = {
+        let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self)
+        lazilyCreatedDynamitAnimator.delegate = self
+        return lazilyCreatedDynamitAnimator
+        }()
+    
+    
+    var gameState = GameState.Initial
+    var lastCollidedItem: NSCopying?
     
     // MARK: - Level variables
     var currentLevel = 0
@@ -88,6 +102,24 @@ class BreakoutView: UIView {
     var paddleWidth: Float = 0.40
     
     // MARK: - Loading
+    func preloadGame() {
+        self.animator.addBehavior(self.breakoutBehavior)
+        self.breakoutBehavior.collisionDelegate = self
+        
+        var rect = self.bounds
+        rect.size.height *= CGFloat(1 + 1.5 * ballWidth)
+        self.breakoutBehavior.addBarrier(UIBezierPath(rect: rect), named: PathNames.BoxBarrier)
+        
+        let bottomBarrierOrigin = CGPoint(x: 0, y: rect.size.height)
+        let bottomBarrierSize = CGSize(width: self.bounds.size.width, height: 1)
+        self.breakoutBehavior.addBarrier(UIBezierPath(rect: CGRect(origin: bottomBarrierOrigin, size: bottomBarrierSize)), named: PathNames.BottomBarrier)
+    }
+    
+    func pauseGame() {
+        //TODO: Pause the game
+        self.gameState = GameState.Paused
+    }
+    
     func reloadGame() {
         self.removePaddle()
         self.removeBricks()
@@ -99,6 +131,7 @@ class BreakoutView: UIView {
         self.addBricks()
         self.addPaddle()
         self.addBalls()
+        self.gameState = .Loaded
     }
     
     func tryLoadNextLevel() -> Bool {
@@ -134,8 +167,8 @@ class BreakoutView: UIView {
                 
                 let brickId = brickNumber + (brickInfo.count * rowNumber)
                 bricks[brickId] = brick
-                breakoutBehavior!.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: brickId)
-                self.breakoutBehavior!.addBrick(brick)
+                self.breakoutBehavior.addBarrier(UIBezierPath(roundedRect: brick.frame, cornerRadius: 0), named: brickId)
+                self.breakoutBehavior.addBrick(brick)
             }
         }
     }
@@ -144,8 +177,8 @@ class BreakoutView: UIView {
         for var i = 0; i < self.numberOfRows! * self.bricksPerRow!; i++ {
             if let brick = self.bricks[i] {
                 brick.removeFromSuperview()
-                self.breakoutBehavior!.removeBrick(brick)
-                self.breakoutBehavior!.removeBarrier(named: i)
+                self.breakoutBehavior.removeBrick(brick)
+                self.breakoutBehavior.removeBarrier(named: i)
             }
         }
         
@@ -156,8 +189,8 @@ class BreakoutView: UIView {
     
     func removeBrickAtIndex(index: Int) {
         if let brick = bricks[index] {
-            breakoutBehavior!.removeBrick(brick)
-            breakoutBehavior!.removeBarrier(named: index)
+            self.breakoutBehavior.removeBrick(brick)
+            self.breakoutBehavior.removeBarrier(named: index)
         }
     }
     
@@ -174,31 +207,28 @@ class BreakoutView: UIView {
     }
     
     func addBall() {
-        if self.breakoutBehavior != nil {
-            var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth))
-            ball.backgroundColor = UIColor.orangeColor()
-            self.breakoutBehavior!.addBall(ball)
-            self.breakoutBehavior!.pushBall(ball, magnitude: self.ballSpeed)
-            self.balls.append(ball)
-        }
+        
+        var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth))
+        ball.backgroundColor = UIColor.orangeColor()
+        self.breakoutBehavior.addBall(ball)
+        self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)
+        self.balls.append(ball)
+        
     }
     
     func removeBalls() {
-        if self.breakoutBehavior != nil {
-            for ball in self.balls {
-                ball.removeFromSuperview()
-                self.breakoutBehavior!.removeBall(ball)
-            }
-            self.balls.removeAll(keepCapacity: false)
+        for ball in self.balls {
+            ball.removeFromSuperview()
+            self.breakoutBehavior.removeBall(ball)
         }
+        self.balls.removeAll(keepCapacity: false)
+        
     }
     
     func push(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
-            if self.breakoutBehavior != nil {
-                for ball in self.balls {
-                    self.breakoutBehavior!.pushBall(ball, magnitude: ballSpeed)
-                }
+            for ball in self.balls {
+                self.breakoutBehavior.pushBall(ball, magnitude: ballSpeed)
             }
         }
     }
@@ -215,9 +245,49 @@ class BreakoutView: UIView {
     func addPaddle() {
         paddle = PaddleView(gameFrame: self.bounds.size, maxWidth: CGFloat(self.paddleWidth))
         paddle?.backgroundColor = UIColor.blackColor()
-        breakoutBehavior?.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
-        self.breakoutBehavior?.addPaddle(paddle!)
-        paddle!.setBreakoutBehavior(breakoutBehavior!, withPathName: PathNames.PaddleBarrier)
+        self.breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
+        self.breakoutBehavior.addPaddle(paddle!)
+        paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
     }
-
+    
+    // MARK: - Collision
+    
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
+        if(identifier !== lastCollidedItem || lastCollidedItem === nil) {
+            lastCollidedItem = identifier
+            if let index = identifier as? Int {
+                let brick = self.bricks[index]
+                brick!.setNewHealth(brick!.health - 1)
+                if brick?.health <= 0 {
+                    self.removeBrickAtIndex(index)
+                    self.bricks.removeValueForKey(index)
+                    
+                    if self.bricks.count == 0 {
+                        let gameWon = self.tryLoadNextLevel()
+                        if gameWon {
+                            println("You won the game!")
+                        }
+                    }
+                }
+            } else if let pathName = identifier as? String {
+                if pathName == PathNames.BottomBarrier {
+                    if let ball = item as? BallView {
+                        if let index = find(self.balls, ball) {
+                            self.balls.removeAtIndex(index)
+                            self.breakoutBehavior.removeBall(ball)
+                        }
+                    }
+                    
+                    if self.lives == 0 && self.balls.count == 0 {
+                        println("You lost the game!")
+                    } else if self.lives > 0 {
+                        self.lives--
+                        self.addBall()
+                    }
+                    
+                }
+            }
+        }
+    }
+    
 }
