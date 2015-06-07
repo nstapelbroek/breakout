@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BreakoutViewController: UIViewController {
+class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     
     private var settings: BreakoutSettings? {
         didSet {
@@ -36,6 +36,7 @@ class BreakoutViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.gameView.breakoutDelegate = self
         self.settings = BreakoutSettings.load()
     }
     
@@ -59,5 +60,22 @@ class BreakoutViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.gameView.pauseGame()
     }
+    
+    func onBrickHit(brickHealth: Int) {
+        //TODO: Implement scoring system
+    }
+    
+    func onLivesChanged(newLives: Int) {
+        self.lives = newLives
+    }
+    
+    func onLevelCompleted() {
+        let gameWon = self.gameView.tryLoadNextLevel()
+        if gameWon {
+            //TODO: Show an alert so the player can restart the game
+            println("You won the game!")
+        }
+    }
+    
 }
 

@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol UIBreakoutDelegate: class {
+    func onBrickHit(brickHealth: Int)
+    func onLivesChanged(newLives: Int)
+    func onLevelCompleted()
+}
+
 @IBDesignable
 class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelegate {
     
@@ -18,10 +24,6 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         static let BottomBarrier = "Bottom"
         static let PaddleBarrier = "Paddle"
     }
-    var lives = 5
-    enum GameState: Int {
-        case Initial = 0, Loaded, Playing, Paused, Finished
-    }
     
     lazy var animator: UIDynamicAnimator = {
         let lazilyCreatedDynamitAnimator = UIDynamicAnimator(referenceView: self)
@@ -29,9 +31,20 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         return lazilyCreatedDynamitAnimator
         }()
     
-    
+    // MARK: - Gamestate variables
+    enum GameState: Int {
+        case Initial = 0, Loaded, Playing, Paused, Finished
+    }
     var gameState = GameState.Initial
+    var lives = 5 {
+        didSet {
+            if let delegate = self.breakoutDelegate {
+                delegate.onLivesChanged(self.lives)
+            }
+        }
+    }
     var lastCollidedItem: NSCopying?
+    var breakoutDelegate: UIBreakoutDelegate?
     
     // MARK: - Level variables
     var currentLevel = 0
@@ -251,22 +264,21 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     }
     
     // MARK: - Collision
-    
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
         if(identifier !== lastCollidedItem || lastCollidedItem === nil) {
             lastCollidedItem = identifier
             if let index = identifier as? Int {
                 let brick = self.bricks[index]
                 brick!.setNewHealth(brick!.health - 1)
+                if let delegate = self.breakoutDelegate {
+                    delegate.onBrickHit(brick!.health)
+                }
                 if brick?.health <= 0 {
                     self.removeBrickAtIndex(index)
                     self.bricks.removeValueForKey(index)
                     
-                    if self.bricks.count == 0 {
-                        let gameWon = self.tryLoadNextLevel()
-                        if gameWon {
-                            println("You won the game!")
-                        }
+                    if self.bricks.count == 0 && self.breakoutDelegate != nil {
+                        self.breakoutDelegate!.onLevelCompleted()
                     }
                 }
             } else if let pathName = identifier as? String {
@@ -284,10 +296,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                         self.lives--
                         self.addBall()
                     }
-                    
                 }
             }
         }
     }
-    
 }
