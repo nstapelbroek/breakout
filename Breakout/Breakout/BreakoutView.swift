@@ -139,7 +139,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                 if abs(data.gravity.x) >= 0.25 {
                     for ball in self!.balls {
                         let angle = (1.5 * M_PI) - (0.5 * M_PI * data.gravity.x)
-                        self!.breakoutBehavior.pushBall(ball, magnitude: self!.ballSpeed / 4, angle: angle)
+                        //TODO Fix gravitation
+                        //self!.breakoutBehavior.pushBall(ball, magnitude: self!.ballSpeed / 4, angle: angle)
                     }
                 }
             }
@@ -147,8 +148,21 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     }
     
     func pauseGame() {
-        //TODO: Pause the game
         self.gameState = GameState.Paused
+        for ball in self.balls {
+            ball.lastVelocity = self.breakoutBehavior.stopBall(ball)
+        }
+    }
+    
+    func startGame() {
+        self.gameState = GameState.Playing
+        for ball in self.balls {
+            if let velocity = ball.lastVelocity {
+                self.breakoutBehavior.pushBall(ball, velocity: velocity)
+            } else {
+                self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)
+            }
+        }
     }
     
     func reloadGame() {
@@ -229,7 +243,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     func addBalls() {
         for var i = 0; i < numberOfBalls; i++
         {
-            addBall()
+            addBall(false)
         }
         
         if !balls.isEmpty {
@@ -237,12 +251,13 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         }
     }
     
-    func addBall() {
-        
+    func addBall(shouldPush: Bool) {
         var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth))
         ball.backgroundColor = UIColor.orangeColor()
         self.breakoutBehavior.addBall(ball)
-        self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed, angle: nil)
+        if shouldPush {
+            self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)
+        }
         self.balls.append(ball)
         
     }
@@ -259,7 +274,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     func push(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
             for ball in self.balls {
-                self.breakoutBehavior.pushBall(ball, magnitude: ballSpeed, angle: nil)
+                //self.breakoutBehavior.pushBall(ball, magnitude: ballSpeed, angle: nil)
+                self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)
             }
         }
     }
@@ -312,7 +328,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                         println("You lost the game!")
                     } else if self.lives > 0 {
                         self.lives--
-                        self.addBall()
+                        self.addBall(true)
                     }
                 }
             }

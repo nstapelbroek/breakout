@@ -9,6 +9,8 @@
 import UIKit
 
 class BallView: UIView {
+    
+    var lastVelocity: CGPoint?
 
     init(gameFrame: CGSize, maxWidth: CGFloat) {
         let width = gameFrame.width * maxWidth

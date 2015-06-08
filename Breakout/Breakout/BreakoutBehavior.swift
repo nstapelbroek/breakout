@@ -42,28 +42,26 @@ class BreakoutBehavior: UIDynamicBehavior {
         ballBehavior.addItem(ball)
     }
     
-    func pushBall(ball: UIView, magnitude: Float, angle: Double?) {
-        let push = UIPushBehavior(items: [ball], mode: .Instantaneous)
-        push.magnitude = CGFloat(magnitude)
-        
-        if angle == nil {
-            push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
-        } else {
-            push.angle = CGFloat(angle!)
-        }
-        
-        push.action = { [weak push] in
-            //Remove the push if it is no longer in use
-            if !push!.active {
-                self.removeChildBehavior(push!)
-            }
-        }
-        addChildBehavior(push)
+    func pushBall(ball: UIView, magnitude: Float) {
+        let angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
+        let velocityX = CGFloat(1000 * magnitude * Float(cos(angle)))
+        let velocityY = CGFloat(1000 * magnitude * Float(sin(angle)))
+        pushBall(ball, velocity: CGPoint(x: velocityX, y: velocityY))
+    }
+    
+    func pushBall(ball: UIView, velocity: CGPoint) {
+         ballBehavior.addLinearVelocity(velocity, forItem: ball)
     }
     
     func removeBall(ball: BallView) {
         collider.removeItem(ball)
         ballBehavior.removeItem(ball)
+    }
+    
+    func stopBall(ball: UIView) -> CGPoint {
+        let velocity = ballBehavior.linearVelocityForItem(ball)
+        ballBehavior.addLinearVelocity(CGPoint(x: -velocity.x, y: -velocity.y), forItem: ball)
+        return velocity
     }
 
     func addPaddle(paddle: PaddleView) {
