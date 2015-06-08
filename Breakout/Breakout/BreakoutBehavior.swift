@@ -34,7 +34,6 @@ class BreakoutBehavior: UIDynamicBehavior {
         super.init()
         addChildBehavior(collider)
         addChildBehavior(ballBehavior)
-        
     }
     
     func addBall(ball: BallView) {
@@ -43,11 +42,16 @@ class BreakoutBehavior: UIDynamicBehavior {
         ballBehavior.addItem(ball)
     }
     
-    func pushBall(ball: UIView, magnitude: Float) {
+    func pushBall(ball: UIView, magnitude: Float, angle: Double?) {
         let push = UIPushBehavior(items: [ball], mode: .Instantaneous)
         push.magnitude = CGFloat(magnitude)
         
-        push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
+        if angle == nil {
+            push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
+        } else {
+            push.angle = CGFloat(angle!)
+        }
+        
         push.action = { [weak push] in
             //Remove the push if it is no longer in use
             if !push!.active {
@@ -62,7 +66,6 @@ class BreakoutBehavior: UIDynamicBehavior {
         ballBehavior.removeItem(ball)
     }
 
-    
     func addPaddle(paddle: PaddleView) {
         dynamicAnimator?.referenceView?.addSubview(paddle)
     }
