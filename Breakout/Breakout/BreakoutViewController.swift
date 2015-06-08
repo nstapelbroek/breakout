@@ -17,6 +17,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
                 self.gameView?.ballSpeed = self.settings!.ballSpeed!
                 self.gameView?.numberOfBalls = self.settings!.numberOfBalls!
                 self.gameView?.paddleWidth = self.settings!.paddleWidth!
+                self.gameView?.theme = self.settings!.selectedTheme!
             }
         }
     }

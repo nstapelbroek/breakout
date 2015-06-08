@@ -22,12 +22,14 @@ class BreakoutSettings: Printable {
         static let NumberOfBalls = "NumberOfBalls"
         static let BallWidth = "BallWidth"
         static let FirstLoad = "FirstLoad"
+        static let SelectedTheme = "SelectedTheme"
     }
     
     private static let defaultPaddleWidth: Float = 0.20
     private static let defaultBallSpeed: Float = 0.05
     private static let defaultNumberOfBalls: Int = 1
     private static let defaultBallWidth: Float = 0.05
+    private static let defaultSelectedTheme: String = BreakoutThemeManager.themes[0] as String
     
     var paddleWidth: Float? {
         didSet {
@@ -51,6 +53,7 @@ class BreakoutSettings: Printable {
             }
         }
     }
+    var selectedTheme: BreakoutTheme?
     
     //Private init to force use of the load function.
     private init() {}
@@ -70,6 +73,10 @@ class BreakoutSettings: Printable {
         settings.ballSpeed = defaults.floatForKey(DefaultNames.BallSpeed)
         settings.numberOfBalls = defaults.integerForKey(DefaultNames.NumberOfBalls)
         settings.ballWidth = defaults.floatForKey(DefaultNames.BallWidth)
+        
+        let themeName = defaults.objectForKey(DefaultNames.SelectedTheme) as! String
+        settings.selectedTheme = BreakoutThemeManager.getThemeInstance(themeName)
+        println("loaded \(settings.selectedTheme)")
         return settings;
     }
     
@@ -79,6 +86,7 @@ class BreakoutSettings: Printable {
         defaults.setFloat(defaultBallSpeed, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(defaultNumberOfBalls, forKey: DefaultNames.NumberOfBalls)
         defaults.setFloat(defaultBallWidth, forKey: DefaultNames.BallWidth)
+        defaults.setValue(defaultSelectedTheme, forKey: DefaultNames.SelectedTheme)
         return defaults
     }
     
@@ -88,5 +96,8 @@ class BreakoutSettings: Printable {
         defaults.setFloat(self.ballSpeed!, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
         defaults.setFloat(self.ballWidth!, forKey: DefaultNames.BallWidth)
+        defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
+        defaults.setObject(BreakoutThemeManager.getThemeName(selectedTheme!), forKey: DefaultNames.SelectedTheme)
+        println("saved \(BreakoutThemeManager.getThemeName(selectedTheme!))")
     }
 }
