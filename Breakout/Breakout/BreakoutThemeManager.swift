@@ -32,7 +32,7 @@ class BreakoutThemeManager {
             return BreakoutThemeManager.themes[1]
         }
         return BreakoutThemeManager.themes[0]
-    }
+    }  
     
     static func getThemeIndex(themeInstance: BreakoutTheme) -> Int {
         if let theme = themeInstance as? AnotherBreaktoutTheme {
