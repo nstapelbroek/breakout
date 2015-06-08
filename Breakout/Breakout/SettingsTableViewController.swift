@@ -16,7 +16,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var ballWidthSlider: UISlider!
     @IBOutlet weak var ballSpeedSlider: UISlider!
     @IBOutlet weak var numberOfBallsSegmentedControl: UISegmentedControl!
-    
+    @IBOutlet weak var selectedThemeSegmentedControl: UISegmentedControl!
     //Gets or sets the number of balls. The selectedSegmentIndex is offset due to index 0 meaning 1 ball.
     var numberOfBalls: Int {
         get {
@@ -34,6 +34,7 @@ class SettingsTableViewController: UITableViewController {
         ballWidthSlider.setValue(settings.ballWidth!, animated: false)
         ballSpeedSlider.setValue(settings.ballSpeed!, animated: false)
         numberOfBalls = settings.numberOfBalls!
+        selectedThemeSegmentedControl.selectedSegmentIndex = BreakoutThemeManager.getThemeIndex(settings.selectedTheme!)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -49,6 +50,7 @@ class SettingsTableViewController: UITableViewController {
         settings.ballWidth = ballWidthSlider.value
         settings.ballSpeed = ballSpeedSlider.value
         settings.numberOfBalls = numberOfBalls
+        settings.selectedTheme = BreakoutThemeManager.getThemeInstance(selectedThemeSegmentedControl.selectedSegmentIndex)
         settings.save()
     }
 
@@ -68,7 +70,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 4
+        return 5
     }
 
     /*

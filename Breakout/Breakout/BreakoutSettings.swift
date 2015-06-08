@@ -29,7 +29,7 @@ class BreakoutSettings: Printable {
     private static let defaultBallSpeed: Float = 0.05
     private static let defaultNumberOfBalls: Int = 1
     private static let defaultBallWidth: Float = 0.05
-    private static let defaultSelectedTheme: String = "DefaultBreakoutTheme"
+    private static let defaultSelectedTheme: String = BreakoutThemeManager.themes[0] as String
     
     var paddleWidth: Float? {
         didSet {
@@ -73,8 +73,10 @@ class BreakoutSettings: Printable {
         settings.ballSpeed = defaults.floatForKey(DefaultNames.BallSpeed)
         settings.numberOfBalls = defaults.integerForKey(DefaultNames.NumberOfBalls)
         settings.ballWidth = defaults.floatForKey(DefaultNames.BallWidth)
-        settings.selectedTheme = initializeTheme(defaults.objectForKey(DefaultNames.SelectedTheme) as! String)
         
+        let themeName = defaults.objectForKey(DefaultNames.SelectedTheme) as! String
+        settings.selectedTheme = BreakoutThemeManager.getThemeInstance(themeName)
+        println("loaded \(settings.selectedTheme)")
         return settings;
     }
     
@@ -95,12 +97,7 @@ class BreakoutSettings: Printable {
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
         defaults.setFloat(self.ballWidth!, forKey: DefaultNames.BallWidth)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
-    }
-    
-    static func initializeTheme(stringToPrint: String) -> BreakoutTheme {
-        switch stringToPrint {
-        case "DefaultBreakoutTheme": return DefaultBreaktoutTheme();
-        default: return DefaultBreaktoutTheme();
-        }
+        defaults.setObject(BreakoutThemeManager.getThemeName(selectedTheme!), forKey: DefaultNames.SelectedTheme)
+        println("saved \(BreakoutThemeManager.getThemeName(selectedTheme!))")
     }
 }
