@@ -22,12 +22,14 @@ class BreakoutSettings: Printable {
         static let NumberOfBalls = "NumberOfBalls"
         static let BallWidth = "BallWidth"
         static let FirstLoad = "FirstLoad"
+        static let SelectedTheme = "SelectedTheme"
     }
     
     private static let defaultPaddleWidth: Float = 0.20
     private static let defaultBallSpeed: Float = 0.05
     private static let defaultNumberOfBalls: Int = 1
     private static let defaultBallWidth: Float = 0.05
+    private static let defaultSelectedTheme: String = "DefaultBreakoutTheme"
     
     var paddleWidth: Float? {
         didSet {
@@ -51,6 +53,7 @@ class BreakoutSettings: Printable {
             }
         }
     }
+    var selectedTheme: BreakoutTheme?
     
     //Private init to force use of the load function.
     private init() {}
@@ -70,6 +73,8 @@ class BreakoutSettings: Printable {
         settings.ballSpeed = defaults.floatForKey(DefaultNames.BallSpeed)
         settings.numberOfBalls = defaults.integerForKey(DefaultNames.NumberOfBalls)
         settings.ballWidth = defaults.floatForKey(DefaultNames.BallWidth)
+        settings.selectedTheme = initializeTheme(defaults.objectForKey(DefaultNames.SelectedTheme) as! String)
+        
         return settings;
     }
     
@@ -79,6 +84,7 @@ class BreakoutSettings: Printable {
         defaults.setFloat(defaultBallSpeed, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(defaultNumberOfBalls, forKey: DefaultNames.NumberOfBalls)
         defaults.setFloat(defaultBallWidth, forKey: DefaultNames.BallWidth)
+        defaults.setValue(defaultSelectedTheme, forKey: DefaultNames.SelectedTheme)
         return defaults
     }
     
@@ -88,5 +94,13 @@ class BreakoutSettings: Printable {
         defaults.setFloat(self.ballSpeed!, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
         defaults.setFloat(self.ballWidth!, forKey: DefaultNames.BallWidth)
+        defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
+    }
+    
+    static func initializeTheme(stringToPrint: String) -> BreakoutTheme {
+        switch stringToPrint {
+        case "DefaultBreakoutTheme": return DefaultBreaktoutTheme();
+        default: return DefaultBreaktoutTheme();
+        }
     }
 }
