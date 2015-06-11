@@ -37,7 +37,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         case Initial = 0, Loaded, Playing, Paused, Finished
     }
     var gameState = GameState.Initial
-    var lives = 5 {
+    static let initialLives = 5
+    var lives = BreakoutView.initialLives {
         didSet {
             if let delegate = self.breakoutDelegate {
                 delegate.onLivesChanged(self.lives)
@@ -166,6 +167,13 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                 self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)
             }
         }
+    }
+    
+    func restartGame() {
+        self.lives = BreakoutView.initialLives
+        self.currentLevel = 0
+        self.reloadGame()
+        self.startGame()
     }
     
     func reloadGame() {
@@ -332,8 +340,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                     if self.lives == 0 && self.balls.count == 0 {
                         println("You lost the game!")
                     } else if self.lives > 0 {
-                        self.lives--
                         self.addBall(true)
+                        self.lives--
                     }
                 }
             }

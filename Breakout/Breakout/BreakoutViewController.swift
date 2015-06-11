@@ -22,6 +22,12 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         }
     }
     
+    private var restartAlert = UIAlertController (
+        title: "Title",
+        message: "Do you want to restart the game?",
+        preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
     @IBOutlet weak var gameView: BreakoutView!
     @IBOutlet weak var livesLabel: UILabel!
     
@@ -39,6 +45,13 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         super.viewDidLoad()
         self.gameView.breakoutDelegate = self
         self.settings = BreakoutSettings.load()
+        self.restartAlert.addAction(UIAlertAction(
+            title: "Restart",
+            style: .Default)
+            { (action UIAlertAction) -> Void in
+                self.restartGame()
+            }
+        )
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -63,19 +76,29 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         self.gameView.pauseGame()
     }
     
+    func restartGame() {
+        self.gameView.restartGame()
+    }
+    
     func onBrickHit(brickHealth: Int) {
         //TODO: Implement scoring system
     }
     
     func onLivesChanged(newLives: Int) {
         self.lives = newLives
+        if self.lives == 0 && self.gameView.balls.count == 0 {
+            self.gameView.pauseGame()
+            self.restartAlert.title = "You lost the game!"
+            self.presentViewController(self.restartAlert, animated: true, completion: nil)
+        }
     }
     
     func onLevelCompleted() {
         let gameWon = self.gameView.tryLoadNextLevel()
         if gameWon {
-            //TODO: Show an alert so the player can restart the game
-            println("You won the game!")
+            self.gameView.pauseGame()
+            self.restartAlert.title = "You won the game!"
+            self.presentViewController(self.restartAlert, animated: true, completion: nil)
         }
     }
     
