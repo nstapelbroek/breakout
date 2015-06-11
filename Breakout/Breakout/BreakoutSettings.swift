@@ -76,7 +76,6 @@ class BreakoutSettings: Printable {
         
         let themeName = defaults.stringForKey(DefaultNames.SelectedTheme) ?? defaultSelectedTheme
         settings.selectedTheme = BreakoutThemeManager.getThemeInstance(themeName)
-        println("loaded \(settings.selectedTheme)")
         return settings;
     }
     
@@ -98,6 +97,5 @@ class BreakoutSettings: Printable {
         defaults.setFloat(self.ballWidth!, forKey: DefaultNames.BallWidth)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
         defaults.setObject(BreakoutThemeManager.getThemeName(selectedTheme!), forKey: DefaultNames.SelectedTheme)
-        println("saved \(BreakoutThemeManager.getThemeName(selectedTheme!))")
     }
 }
