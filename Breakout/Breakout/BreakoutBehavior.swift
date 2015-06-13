@@ -56,6 +56,7 @@ class BreakoutBehavior: UIDynamicBehavior {
     func removeBall(ball: BallView) {
         collider.removeItem(ball)
         ballBehavior.removeItem(ball)
+        ball.removeFromSuperview()
     }
     
     func stopBall(ball: UIView) -> CGPoint {
