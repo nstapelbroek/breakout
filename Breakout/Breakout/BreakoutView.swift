@@ -187,6 +187,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         self.addBricks()
         self.addPaddle()
         self.addBalls()
+        self.backgroundColor = self.theme.getBackgroundColor()
         self.gameState = .Loaded
     }
     
@@ -315,6 +316,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
             lastCollidedItem = identifier
             if let index = identifier as? Int {
                 let brick = self.bricks[index]
+                println(brick!.bounds)
                 brick!.health = (brick!.health - 1)
                 brick!.backgroundColor = theme?.getBrickColor(brick!.health)
                 if let delegate = self.breakoutDelegate {

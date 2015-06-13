@@ -31,4 +31,8 @@ class DefaultBreaktoutTheme: BreakoutTheme {
         default: return UIColor.blackColor()
         }
     }
+    
+    func getBackgroundColor() -> UIColor {
+        return UIColor.whiteColor()
+    }
 }

@@ -31,4 +31,8 @@ class AnotherBreaktoutTheme: BreakoutTheme {
         default: return UIColor.grayColor()
         }
     }
+    
+    func getBackgroundColor() -> UIColor {
+        return UIColor(patternImage: UIImage(named: "backgroundSavanne")!)
+    }
 }

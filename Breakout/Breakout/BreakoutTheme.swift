@@ -19,4 +19,6 @@ protocol BreakoutTheme {
     
     func getBrickColor(brickHealth: Int) -> UIColor
     
+    func getBackgroundColor() -> UIColor
+    
 }
