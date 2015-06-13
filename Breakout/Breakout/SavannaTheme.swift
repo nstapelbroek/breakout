@@ -11,7 +11,7 @@ import UIKit
 
 class SavannaTheme: BreakoutTheme {
     
-    var Name = "Savanna Theme"
+    static var Name = "Savanna Theme"
     
     func getBallColor() -> UIColor {
         return UIColor.greenColor()

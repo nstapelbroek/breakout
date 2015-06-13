@@ -11,7 +11,7 @@ import UIKit
 
 protocol BreakoutTheme {
     
-    var Name: String { get }
+    static var Name: String { get }
     
     func getBallColor() -> UIColor
     

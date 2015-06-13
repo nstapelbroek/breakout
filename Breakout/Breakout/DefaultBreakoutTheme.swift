@@ -11,7 +11,7 @@ import UIKit
 
 class DefaultBreaktoutTheme: BreakoutTheme {
     
-    var Name = "Default Theme"
+    static var Name = "Default Theme"
     
     func getBallColor() -> UIColor {
         return UIColor.orangeColor()

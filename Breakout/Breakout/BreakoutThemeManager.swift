@@ -9,11 +9,11 @@
 import Foundation
 
 class BreakoutThemeManager {
-    static let themes = ["DefaultBreakoutTheme", "SavannaTheme"]
+    static let themes = [DefaultBreaktoutTheme.Name, SavannaTheme.Name]
     
     static func getThemeInstance(themeName: String) -> BreakoutTheme {
         switch themeName {
-        case "SavannaTheme": return SavannaTheme()
+        case SavannaTheme.Name: return SavannaTheme()
         default: break
         }
         return DefaultBreaktoutTheme()
