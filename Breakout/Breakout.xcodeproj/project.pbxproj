@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2839388F1B257AD500CD5C59 /* BreakoutTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839388D1B257AD500CD5C59 /* BreakoutTheme.swift */; };
 		283938901B257AD500CD5C59 /* DefaultBreakoutTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2839388E1B257AD500CD5C59 /* DefaultBreakoutTheme.swift */; };
-		28A933E31B259FC200B7579D /* AnotherBreakoutTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A933E21B259FC200B7579D /* AnotherBreakoutTheme.swift */; };
+		28A933E31B259FC200B7579D /* SavannaTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A933E21B259FC200B7579D /* SavannaTheme.swift */; };
 		28A933E51B25A91000B7579D /* BreakoutThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A933E41B25A91000B7579D /* BreakoutThemeManager.swift */; };
 		28D7A8831B09E1620077C2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8821B09E1620077C2C8 /* AppDelegate.swift */; };
 		28D7A8851B09E1620077C2C8 /* BreakoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D7A8841B09E1620077C2C8 /* BreakoutViewController.swift */; };
@@ -39,7 +39,7 @@
 /* Begin PBXFileReference section */
 		2839388D1B257AD500CD5C59 /* BreakoutTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakoutTheme.swift; sourceTree = "<group>"; };
 		2839388E1B257AD500CD5C59 /* DefaultBreakoutTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultBreakoutTheme.swift; sourceTree = "<group>"; };
-		28A933E21B259FC200B7579D /* AnotherBreakoutTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnotherBreakoutTheme.swift; sourceTree = "<group>"; };
+		28A933E21B259FC200B7579D /* SavannaTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavannaTheme.swift; sourceTree = "<group>"; };
 		28A933E41B25A91000B7579D /* BreakoutThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakoutThemeManager.swift; sourceTree = "<group>"; };
 		28D7A87D1B09E1620077C2C8 /* Breakout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breakout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28D7A8811B09E1620077C2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 			children = (
 				2839388D1B257AD500CD5C59 /* BreakoutTheme.swift */,
 				2839388E1B257AD500CD5C59 /* DefaultBreakoutTheme.swift */,
-				28A933E21B259FC200B7579D /* AnotherBreakoutTheme.swift */,
+				28A933E21B259FC200B7579D /* SavannaTheme.swift */,
 				28A933E41B25A91000B7579D /* BreakoutThemeManager.swift */,
 				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
 				F41EB9CB1B0B71E000E03D3A /* BreakoutBehavior.swift */,
@@ -305,7 +305,7 @@
 				28D7A8A91B09E3E60077C2C8 /* SettingsTableViewController.swift in Sources */,
 				F4041DAB1B0B52E30075AC2C /* PaddleView.swift in Sources */,
 				28D7A8AD1B09E8980077C2C8 /* BrickView.swift in Sources */,
-				28A933E31B259FC200B7579D /* AnotherBreakoutTheme.swift in Sources */,
+				28A933E31B259FC200B7579D /* SavannaTheme.swift in Sources */,
 				F4B2CA061B1AFBF90069EFCD /* BreakoutSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

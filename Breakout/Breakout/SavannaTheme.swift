@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class AnotherBreaktoutTheme: BreakoutTheme {
+class SavannaTheme: BreakoutTheme {
     
-    var Name = "Another Theme"
+    var Name = "Savanna Theme"
     
     func getBallColor() -> UIColor {
         return UIColor.greenColor()
