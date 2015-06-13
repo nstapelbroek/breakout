@@ -14,17 +14,15 @@ class BreakoutThemeManager {
     static func getThemeInstance(themeName: String) -> BreakoutTheme {
         switch themeName {
         case SavannaTheme.Name: return SavannaTheme()
-        default: break
+        default: return DefaultBreaktoutTheme()
         }
-        return DefaultBreaktoutTheme()
     }
     
     static func getThemeInstance(themeIndex: Int) -> BreakoutTheme{
         switch themeIndex {
         case 1: return SavannaTheme()
-        default: break
+        default: return DefaultBreaktoutTheme()
         }
-        return DefaultBreaktoutTheme()
     }
     
     static func getThemeName(themeInstance: BreakoutTheme) -> String {
