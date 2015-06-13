@@ -23,10 +23,10 @@ class AnotherBreaktoutTheme: BreakoutTheme {
     
     func getBrickColor(brickHealth: Int) -> UIColor {
         switch brickHealth {
-        case 1: return UIColor.yellowColor()
-        case 2: return UIColor.redColor()
-        case 3: return UIColor.blueColor()
-        case 4: return UIColor.blackColor()
+        case 1: return UIColor(patternImage: UIImage(named: "savanna_block_1")!)
+        case 2: return UIColor(patternImage: UIImage(named: "savanna_block_2")!)
+        case 3: return UIColor(patternImage: UIImage(named: "savanna_block_3")!)
+        case 4: return UIColor(patternImage: UIImage(named: "savanna_block_4")!)
         case 5: return UIColor.cyanColor()
         default: return UIColor.grayColor()
         }
