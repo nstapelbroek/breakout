@@ -33,6 +33,6 @@ class AnotherBreaktoutTheme: BreakoutTheme {
     }
     
     func getBackgroundColor() -> UIColor {
-        return UIColor(patternImage: UIImage(named: "backgroundSavanne")!)
+        return UIColor(patternImage: UIImage(named: "savanna_background")!)
     }
 }
