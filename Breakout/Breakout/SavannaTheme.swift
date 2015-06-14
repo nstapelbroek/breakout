@@ -11,17 +11,17 @@ import UIKit
 
 class SavannaTheme: BreakoutTheme {
     
-    static var Name = "Savanna Theme"
+    override class var Name: String { return "Savanna Theme" }
     
-    func getBallColor() -> UIColor {
+    override func getBallColor() -> UIColor {
         return UIColor.greenColor()
     }
     
-    func getPaddleColor() -> UIColor {
+    override func getPaddleColor() -> UIColor {
         return UIColor.purpleColor()
     }
     
-    func getBrickColor(brickHealth: Int) -> UIColor {
+    override func getBrickColor(brickHealth: Int) -> UIColor {
         switch brickHealth {
         case 1: return UIColor(patternImage: UIImage(named: "savanna_block_1")!)
         case 2: return UIColor(patternImage: UIImage(named: "savanna_block_2")!)
@@ -32,7 +32,7 @@ class SavannaTheme: BreakoutTheme {
         }
     }
     
-    func getBackgroundColor() -> UIColor {
+    override func getBackgroundColor() -> UIColor {
         return UIColor(patternImage: UIImage(named: "savanna_background")!)
     }
 }

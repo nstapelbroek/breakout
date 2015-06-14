@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-protocol BreakoutTheme {
+class BreakoutTheme {
     
-    static var Name: String { get }
+    class var Name: String { return "Theme name" }
     
-    func getBallColor() -> UIColor
+    func getBallColor() -> UIColor { return UIColor.blackColor() }
     
-    func getPaddleColor() -> UIColor
+    func getPaddleColor() -> UIColor { return UIColor.blackColor() }
     
-    func getBrickColor(brickHealth: Int) -> UIColor
+    func getBrickColor(brickHealth: Int) -> UIColor { return UIColor.blackColor() }
     
-    func getBackgroundColor() -> UIColor
+    func getBackgroundColor() -> UIColor { return UIColor.whiteColor() }
     
 }

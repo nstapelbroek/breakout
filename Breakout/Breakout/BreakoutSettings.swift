@@ -96,6 +96,6 @@ class BreakoutSettings: Printable {
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
         defaults.setFloat(self.ballWidth!, forKey: DefaultNames.BallWidth)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)
-        defaults.setObject(BreakoutThemeManager.getThemeName(selectedTheme!), forKey: DefaultNames.SelectedTheme)
+        defaults.setObject(self.selectedTheme!.dynamicType.Name, forKey: DefaultNames.SelectedTheme)
     }
 }

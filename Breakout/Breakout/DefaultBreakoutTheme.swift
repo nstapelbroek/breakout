@@ -11,17 +11,17 @@ import UIKit
 
 class DefaultBreaktoutTheme: BreakoutTheme {
     
-    static var Name = "Default Theme"
+    override class var Name: String { return "Default Theme" }
     
-    func getBallColor() -> UIColor {
+    override func getBallColor() -> UIColor {
         return UIColor.orangeColor()
     }
     
-    func getPaddleColor() -> UIColor {
+    override func getPaddleColor() -> UIColor {
         return UIColor.blackColor()
     }
     
-    func getBrickColor(brickHealth: Int) -> UIColor {
+    override func getBrickColor(brickHealth: Int) -> UIColor {
         switch brickHealth {
         case 1: return UIColor.blueColor()
         case 2: return UIColor.orangeColor()
@@ -32,7 +32,7 @@ class DefaultBreaktoutTheme: BreakoutTheme {
         }
     }
     
-    func getBackgroundColor() -> UIColor {
+    override func getBackgroundColor() -> UIColor {
         return UIColor.whiteColor()
     }
 }
