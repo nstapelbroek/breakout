@@ -23,6 +23,7 @@ class SavannaTheme: BreakoutTheme {
     
     override func getBrickColor(brickHealth: Int) -> UIColor {
         switch brickHealth {
+        //TODO decide if we want to make UIColor's with images scaling or not
         case 1: return UIColor(patternImage: UIImage(named: "savanna_block_1")!)
         case 2: return UIColor(patternImage: UIImage(named: "savanna_block_2")!)
         case 3: return UIColor(patternImage: UIImage(named: "savanna_block_3")!)
@@ -33,6 +34,7 @@ class SavannaTheme: BreakoutTheme {
     }
     
     override func getBackgroundColor() -> UIColor {
+        //TODO decide if we want to make UIColor's with images scaling or not
         return UIColor(patternImage: UIImage(named: "savanna_background")!)
     }
 }
