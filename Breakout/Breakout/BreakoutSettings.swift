@@ -12,7 +12,7 @@ class BreakoutSettings: Printable {
     
     var description: String {
         get {
-            return "{ paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!), ballWidth: \(self.ballWidth) }";
+            return "{ paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!), ballWidth: \(self.ballWidth), selectedTheme: \(self.selectedTheme) }";
         }
     }
     
