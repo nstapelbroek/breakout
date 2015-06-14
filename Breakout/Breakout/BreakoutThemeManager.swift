@@ -12,10 +12,7 @@ class BreakoutThemeManager {
     static let themes = [DefaultBreaktoutTheme.Name, SavannaTheme.Name]
     
     static func getThemeInstance(themeName: String) -> BreakoutTheme {
-        switch themeName {
-        case SavannaTheme.Name: return SavannaTheme()
-        default: return DefaultBreaktoutTheme()
-        }
+        return getThemeInstance(getThemeIndex(themeName))
     }
     
     static func getThemeInstance(themeIndex: Int) -> BreakoutTheme{
@@ -25,10 +22,13 @@ class BreakoutThemeManager {
         }
     }
     
-    static func getThemeIndex(themeInstance: BreakoutTheme) -> Int {
-        if let theme = themeInstance as? SavannaTheme {
-            return 1
+    static func getThemeIndex(themeName: String) -> Int {
+        var themeIndex = themes.startIndex
+        
+        if let index = find(themes, themeName) {
+            themeIndex = index
         }
-        return 0
+        
+        return themeIndex
     }
 }

@@ -34,7 +34,7 @@ class SettingsTableViewController: UITableViewController {
         ballWidthSlider.setValue(settings.ballWidth!, animated: false)
         ballSpeedSlider.setValue(settings.ballSpeed!, animated: false)
         numberOfBalls = settings.numberOfBalls!
-        selectedThemeSegmentedControl.selectedSegmentIndex = BreakoutThemeManager.getThemeIndex(settings.selectedTheme!)
+        selectedThemeSegmentedControl.selectedSegmentIndex = BreakoutThemeManager.getThemeIndex(settings.selectedTheme!.dynamicType.Name)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
