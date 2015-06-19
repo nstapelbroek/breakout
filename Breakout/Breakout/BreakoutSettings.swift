@@ -12,11 +12,12 @@ class BreakoutSettings: Printable {
     
     var description: String {
         get {
-            return "{ paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!), ballWidth: \(self.ballWidth), selectedTheme: \(self.selectedTheme) }";
+            return "{ accelerometerEnabled: \(self.accelerometerEnabled), paddleWidth: \(self.paddleWidth!), ballSpeed: \(self.ballSpeed!), numberOfBalls: \(self.numberOfBalls!), ballWidth: \(self.ballWidth), selectedTheme: \(self.selectedTheme) }";
         }
     }
     
     private struct DefaultNames {
+        static let AccelerometerEnabled = "AccelerometerEnabled"
         static let PaddleWidth = "PaddleWidth"
         static let BallSpeed = "BallSpeed"
         static let NumberOfBalls = "NumberOfBalls"
@@ -25,6 +26,7 @@ class BreakoutSettings: Printable {
         static let SelectedTheme = "SelectedTheme"
     }
     
+    private static let defaultAccelerometerEnabled = false
     private static let defaultPaddleWidth: Float = 0.20
     private static let defaultBallSpeed: Float = 0.05
     private static let defaultNumberOfBalls: Int = 1
@@ -54,6 +56,7 @@ class BreakoutSettings: Printable {
         }
     }
     var selectedTheme: BreakoutTheme?
+    var accelerometerEnabled: Bool?
     
     //Private init to force use of the load function.
     private init() {}
@@ -69,6 +72,7 @@ class BreakoutSettings: Printable {
             defaults = setDefaultSettings()
         }
         
+        settings.accelerometerEnabled = defaults.boolForKey(DefaultNames.AccelerometerEnabled)
         settings.paddleWidth = defaults.floatForKey(DefaultNames.PaddleWidth)
         settings.ballSpeed = defaults.floatForKey(DefaultNames.BallSpeed)
         settings.numberOfBalls = defaults.integerForKey(DefaultNames.NumberOfBalls)
@@ -81,6 +85,7 @@ class BreakoutSettings: Printable {
     
     static func setDefaultSettings() -> NSUserDefaults {
         let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(defaultAccelerometerEnabled, forKey: DefaultNames.AccelerometerEnabled)
         defaults.setFloat(defaultPaddleWidth, forKey: DefaultNames.PaddleWidth)
         defaults.setFloat(defaultBallSpeed, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(defaultNumberOfBalls, forKey: DefaultNames.NumberOfBalls)
@@ -91,6 +96,7 @@ class BreakoutSettings: Printable {
     
     func save() {
         let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(self.accelerometerEnabled!, forKey: DefaultNames.AccelerometerEnabled)
         defaults.setFloat(self.paddleWidth!, forKey: DefaultNames.PaddleWidth)
         defaults.setFloat(self.ballSpeed!, forKey: DefaultNames.BallSpeed)
         defaults.setInteger(self.numberOfBalls!, forKey: DefaultNames.NumberOfBalls)

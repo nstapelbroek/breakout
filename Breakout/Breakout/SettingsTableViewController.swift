@@ -12,6 +12,7 @@ class SettingsTableViewController: UITableViewController {
     
     private let settings = BreakoutSettings.load()
 
+    @IBOutlet weak var accelerometerSwitch: UISwitch!
     @IBOutlet weak var paddleWidthSlider: UISlider!
     @IBOutlet weak var ballWidthSlider: UISlider!
     @IBOutlet weak var ballSpeedSlider: UISlider!
@@ -30,6 +31,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        accelerometerSwitch.setOn(settings.accelerometerEnabled!, animated: false)
         paddleWidthSlider.setValue(settings.paddleWidth!, animated: false)
         ballWidthSlider.setValue(settings.ballWidth!, animated: false)
         ballSpeedSlider.setValue(settings.ballSpeed!, animated: false)
@@ -46,6 +48,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        settings.accelerometerEnabled = accelerometerSwitch.on
         settings.paddleWidth = paddleWidthSlider.value
         settings.ballWidth = ballWidthSlider.value
         settings.ballSpeed = ballSpeedSlider.value
@@ -70,7 +73,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 5
+        return 6
     }
 
     /*

@@ -50,6 +50,27 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     
     // MARK: - Accelerometer variables
     let manager = CMMotionManager()
+    var accelerometerEnabled = false {
+        didSet {
+            if self.accelerometerEnabled {
+                if manager.deviceMotionAvailable {
+                    manager.deviceMotionUpdateInterval = 0.5
+                    manager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue()) {
+                        [weak self] (data: CMDeviceMotion!, error: NSError!) in
+                        
+                        if abs(data.gravity.x) >= 0.25 {
+                            for ball in self!.balls {
+                                let angle = (1.5 * M_PI) - (0.5 * M_PI * data.gravity.x)
+                                //TODO Fix gravitation
+                                //self!.breakoutBehavior.pushBall(ball, magnitude: self!.ballSpeed / 4, angle: angle)
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
     
     // MARK: - Level variables
     var currentLevel = 0
@@ -134,21 +155,6 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         let bottomBarrierOrigin = CGPoint(x: 0, y: rect.size.height)
         let bottomBarrierSize = CGSize(width: self.bounds.size.width, height: 1)
         self.breakoutBehavior.addBarrier(UIBezierPath(rect: CGRect(origin: bottomBarrierOrigin, size: bottomBarrierSize)), named: PathNames.BottomBarrier)
-        
-        if manager.deviceMotionAvailable {
-            manager.deviceMotionUpdateInterval = 0.5
-            manager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue()) {
-                [weak self] (data: CMDeviceMotion!, error: NSError!) in
-                
-                if abs(data.gravity.x) >= 0.25 {
-                    for ball in self!.balls {
-                        let angle = (1.5 * M_PI) - (0.5 * M_PI * data.gravity.x)
-                        //TODO Fix gravitation
-                        //self!.breakoutBehavior.pushBall(ball, magnitude: self!.ballSpeed / 4, angle: angle)
-                    }
-                }
-            }
-        }
     }
     
     func pauseGame() {

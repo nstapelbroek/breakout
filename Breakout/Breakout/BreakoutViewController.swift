@@ -13,6 +13,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     private var settings: BreakoutSettings? {
         didSet {
             if settings != nil {
+                self.gameView?.accelerometerEnabled = self.settings!.accelerometerEnabled!
                 self.gameView?.ballWidth = self.settings!.ballWidth!
                 self.gameView?.ballSpeed = self.settings!.ballSpeed!
                 self.gameView?.numberOfBalls = self.settings!.numberOfBalls!
