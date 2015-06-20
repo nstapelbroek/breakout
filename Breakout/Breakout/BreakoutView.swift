@@ -156,7 +156,6 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         self.lives = BreakoutView.initialLives
         self.currentLevel = 0
         self.reloadGame()
-        self.startGame()
     }
     
     func reloadGame() {

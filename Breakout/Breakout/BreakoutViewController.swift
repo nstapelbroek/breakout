@@ -140,6 +140,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     
     func restartGame() {
         self.gameView.restartGame()
+        self.unPauseGame()
     }
     
     func onBrickHit(brickHealth: Int) {
