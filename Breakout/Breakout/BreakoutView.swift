@@ -133,10 +133,12 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     }
     
     func pauseGame() {
-        self.gameState = GameState.Paused
-        for ball in self.balls {
-            ball.lastVelocity = self.breakoutBehavior.stopBall(ball)
+        if self.gameState != GameState.Paused {
+            for ball in self.balls {
+                ball.lastVelocity = self.breakoutBehavior.stopBall(ball)
+            }
         }
+        self.gameState = GameState.Paused
     }
     
     func startGame() {

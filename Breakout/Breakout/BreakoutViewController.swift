@@ -41,6 +41,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     @IBOutlet weak var countdownLabel: UILabel!
     
     var countdown : Int! = 0
+    var countdownTimer = NSTimer()
     
     var lives: Int {
         get {
@@ -111,6 +112,9 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        if(countdownTimer.valid) {
+            countdownTimer.invalidate()
+        }
         self.gameView.pauseGame()
     }
     
@@ -118,15 +122,15 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     func unPauseGame() {
         countdown = 3
         countdownLabel.text = "Game starting in: \(countdown)"
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countDown:"), userInfo: nil, repeats: true)
+        countdownTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countDown:"), userInfo: nil, repeats: true)
     }
     
     func countDown(timer: NSTimer) {
         countdown = countdown - 1
         countdownLabel.text = "Game starting in: \(countdown)"
         if(countdown <= 0) {
-            timer.invalidate()
             self.gameView.startGame()
+            countdownTimer.invalidate()
             countdownLabel.text = ""
         }
     }
