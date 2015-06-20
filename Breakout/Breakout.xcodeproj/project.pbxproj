@@ -147,10 +147,7 @@
 		F461E8C51B22D7A50056C3FD /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2839388D1B257AD500CD5C59 /* BreakoutTheme.swift */,
-				2839388E1B257AD500CD5C59 /* DefaultBreakoutTheme.swift */,
-				28A933E21B259FC200B7579D /* SavannaTheme.swift */,
-				28A933E41B25A91000B7579D /* BreakoutThemeManager.swift */,
+				F47754E81B35DB3C00F8EF1D /* Themes */,
 				F41EB9C91B0B6DD500E03D3A /* BallView.swift */,
 				F41EB9CB1B0B71E000E03D3A /* BreakoutBehavior.swift */,
 				28D7A8AA1B09E5BE0077C2C8 /* BreakoutView.swift */,
@@ -191,6 +188,17 @@
 				28D7A8A81B09E3E60077C2C8 /* SettingsTableViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		F47754E81B35DB3C00F8EF1D /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				2839388D1B257AD500CD5C59 /* BreakoutTheme.swift */,
+				28A933E41B25A91000B7579D /* BreakoutThemeManager.swift */,
+				2839388E1B257AD500CD5C59 /* DefaultBreakoutTheme.swift */,
+				28A933E21B259FC200B7579D /* SavannaTheme.swift */,
+			);
+			name = Themes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
