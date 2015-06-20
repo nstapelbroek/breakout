@@ -140,7 +140,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dmi-2l-IFG">
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.050000000000000003" minValue="0.01" maxValue="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="Dmi-2l-IFG">
                                                     <rect key="frame" x="6" y="38" width="588" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="114" id="fBJ-rn-YZP"/>
