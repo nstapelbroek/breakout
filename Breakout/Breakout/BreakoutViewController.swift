@@ -87,7 +87,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         self.pauseAlert.addAction(UIAlertAction(
             title: "Continue",
             style: .Default,
-            handler: { (action UIAlertAction) -> Void in self.unPauseGame(); })
+            handler: { (action UIAlertAction) -> Void in self.unPauseGame() })
         )
     }
     
@@ -127,12 +127,12 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         if(countdown == 0) {
             timer.invalidate()
             self.gameView.startGame()
-            countdownLabel.text = "";
+            countdownLabel.text = ""
         }
     }
     
     func restartGame() {
-        self.gameView.restartGame();
+        self.gameView.restartGame()
     }
     
     func onBrickHit(brickHealth: Int) {
