@@ -43,7 +43,7 @@ class BreakoutBehavior: UIDynamicBehavior {
     }
     
     func pushBall(ball: UIView, magnitude: Float) {
-        let angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
+        let angle = CGFloat(1.25 * M_PI + (0.5 * M_PI) * (Double(arc4random()) / Double(UINT32_MAX)))
         let velocityX = CGFloat(1000 * magnitude * Float(cos(angle)))
         let velocityY = CGFloat(1000 * magnitude * Float(sin(angle)))
         pushBall(ball, velocity: CGPoint(x: velocityX, y: velocityY))
