@@ -267,7 +267,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     }
     
     func push(gesture: UITapGestureRecognizer) {
-        if gesture.state == .Ended {
+        if gesture.state == .Ended && self.gameState == GameState.Playing {
             for ball in self.balls {
                 //self.breakoutBehavior.pushBall(ball, magnitude: ballSpeed, angle: nil)
                 self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)

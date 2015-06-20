@@ -30,8 +30,17 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         preferredStyle: UIAlertControllerStyle.Alert
     )
     
+    private var pauseAlert = UIAlertController (
+        title: "Game paused",
+        message: "Please select an option below to continue",
+        preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
     @IBOutlet weak var gameView: BreakoutView!
     @IBOutlet weak var livesLabel: UILabel!
+    @IBOutlet weak var countdownLabel: UILabel!
+    
+    var countdown : Int! = 0
     
     var lives: Int {
         get {
@@ -74,6 +83,12 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
                 self.restartGame()
             }
         )
+        
+        self.pauseAlert.addAction(UIAlertAction(
+            title: "Continue",
+            style: .Default,
+            handler: { (action UIAlertAction) -> Void in self.unPauseGame(); })
+        )
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -81,14 +96,15 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         if self.gameView.gameState == .Initial {
             self.gameView.preloadGame()
             self.gameView.loadGame()
-            self.gameView.startGame()
+            self.presentViewController(self.pauseAlert, animated: true, completion: nil)
         } else if self.gameView.gameState == .Paused {
             let newSettings = BreakoutSettings.load()
             if settings?.description != newSettings.description {
                 settings = newSettings
                 self.gameView.reloadGame()
+                self.presentViewController(self.pauseAlert, animated: true, completion: nil)
             } else {
-                self.gameView.startGame()
+                self.presentViewController(self.pauseAlert, animated: true, completion: nil)
             }
         }
     }
@@ -98,8 +114,25 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         self.gameView.pauseGame()
     }
     
+    
+    func unPauseGame() {
+        countdown = 5
+        countdownLabel.text = "Game starting in: \(countdown)"
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countDown:"), userInfo: nil, repeats: true)
+    }
+    
+    func countDown(timer: NSTimer) {
+        countdown = countdown - 1
+        countdownLabel.text = "Game starting in: \(countdown)"
+        if(countdown == 0) {
+            timer.invalidate()
+            self.gameView.startGame()
+            countdownLabel.text = "";
+        }
+    }
+    
     func restartGame() {
-        self.gameView.restartGame()
+        self.gameView.restartGame();
     }
     
     func onBrickHit(brickHealth: Int) {
