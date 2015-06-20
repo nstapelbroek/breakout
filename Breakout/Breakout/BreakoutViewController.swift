@@ -124,7 +124,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     func countDown(timer: NSTimer) {
         countdown = countdown - 1
         countdownLabel.text = "Game starting in: \(countdown)"
-        if(countdown == 0) {
+        if(countdown <= 0) {
             timer.invalidate()
             self.gameView.startGame()
             countdownLabel.text = ""
