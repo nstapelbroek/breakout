@@ -324,7 +324,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                     }
                     
                     if self.lives == 0 && self.balls.count == 0 {
-                        println("You lost the game!")
+                        self.breakoutDelegate?.onLivesChanged(0)
                     } else if self.lives > 0 {
                         self.addBall(true)
                         self.lives--
