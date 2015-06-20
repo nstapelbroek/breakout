@@ -11,6 +11,7 @@ import UIKit
 class BallView: UIView {
     
     var lastVelocity: CGPoint?
+    var fillColor: UIColor?
 
     init(gameFrame: CGSize, maxWidth: CGFloat, offset:Int = 0) {
         let width = gameFrame.width * maxWidth
@@ -20,19 +21,18 @@ class BallView: UIView {
         let origin = CGPoint(x: x, y: y)
         
         super.init(frame: CGRect(origin: origin, size: size))
+        self.backgroundColor = UIColor.clearColor();
     }
     
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
+    
     override func drawRect(rect: CGRect) {
-        // Drawing code
+        var path = UIBezierPath(ovalInRect: rect)
+        fillColor?.setFill()
+        path.fill()
     }
-    */
 
 }
