@@ -54,20 +54,16 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         didSet {
             if self.accelerometerEnabled {
                 if manager.deviceMotionAvailable {
-                    manager.deviceMotionUpdateInterval = 0.5
-                    manager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue()) {
-                        [weak self] (data: CMDeviceMotion!, error: NSError!) in
-                        
-                        if abs(data.gravity.x) >= 0.25 {
-                            for ball in self!.balls {
-                                let angle = (1.5 * M_PI) - (0.5 * M_PI * data.gravity.x)
-                                //TODO Fix gravitation
-                                //self!.breakoutBehavior.pushBall(ball, magnitude: self!.ballSpeed / 4, angle: angle)
-                            }
-                        }
+                    manager.deviceMotionUpdateInterval = 0.01
+                    manager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
+                        [weak self] (data: CMAccelerometerData!, error: NSError!) in
+                        self!.paddle!.moveBy(CGPoint(x: 20.0 * data.acceleration.x , y: 0.0))
                     }
                 }
-
+            } else {
+                if manager.deviceMotionAvailable {
+                    manager.stopAccelerometerUpdates()
+                }
             }
         }
     }

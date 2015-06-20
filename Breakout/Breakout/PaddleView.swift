@@ -39,16 +39,19 @@ class PaddleView: UIView {
     func move(gesture: UIPanGestureRecognizer) {
         if gesture.state == .Changed {
             let gestureLocation = gesture.locationInView(self)
-            var newX = frame.origin.x + gestureLocation.x - (frame.width / 2)
-            if newX > 0 && newX < (superview!.bounds.width - frame.width) {
-                frame.origin = CGPoint(x: newX, y: frame.origin.y)
-            }
-            
+            self.moveBy(CGPoint(x: gestureLocation.x - (frame.width / 2), y: gestureLocation.y))
             gesture.setTranslation(CGPointZero, inView: self)
-            
-            if behavior != nil && pathName != nil {
-                behavior!.addBarrier(UIBezierPath(rect: frame), named: pathName!)
-            }
+        }
+    }
+    
+    func moveBy(point: CGPoint){
+        var newX = frame.origin.x + point.x
+        if newX > 0 && newX < (superview!.bounds.width - frame.width) {
+            frame.origin = CGPoint(x: newX, y: frame.origin.y)
+        }
+        
+        if behavior != nil && pathName != nil {
+            behavior!.addBarrier(UIBezierPath(rect: frame), named: pathName!)
         }
     }
 
