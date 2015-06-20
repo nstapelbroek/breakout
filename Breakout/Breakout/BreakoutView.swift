@@ -175,10 +175,10 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     func tryLoadNextLevel() -> Bool {
         self.currentLevel++
         if self.levels.count == self.currentLevel {
-            return true;
+            return true
         } else {
             self.reloadGame()
-            return false;
+            return false
         }
     }
     
