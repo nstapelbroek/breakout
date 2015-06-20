@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreMotion
 
 protocol UIBreakoutDelegate: class {
     func onBrickHit(brickHealth: Int)
@@ -47,26 +46,6 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     }
     var lastCollidedItem: NSCopying?
     var breakoutDelegate: UIBreakoutDelegate?
-    
-    // MARK: - Accelerometer variables
-    let manager = CMMotionManager()
-    var accelerometerEnabled = false {
-        didSet {
-            if self.accelerometerEnabled {
-                if manager.deviceMotionAvailable {
-                    manager.deviceMotionUpdateInterval = 0.01
-                    manager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
-                        [weak self] (data: CMAccelerometerData!, error: NSError!) in
-                        self!.paddle!.moveBy(CGPoint(x: 20.0 * data.acceleration.x , y: 0.0))
-                    }
-                }
-            } else {
-                if manager.deviceMotionAvailable {
-                    manager.stopAccelerometerUpdates()
-                }
-            }
-        }
-    }
     
     // MARK: - Level variables
     var currentLevel = 0
@@ -310,6 +289,10 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         self.breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
         self.breakoutBehavior.addPaddle(paddle!)
         paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
+    }
+    
+    func movePaddleBy(point: CGPoint) {
+        self.paddle?.moveBy(point)
     }
     
     // MARK: - Collision

@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import CoreMotion
 
 class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     
     private var settings: BreakoutSettings? {
         didSet {
             if settings != nil {
-                self.gameView?.accelerometerEnabled = self.settings!.accelerometerEnabled!
+                self.accelerometerEnabled = self.settings!.accelerometerEnabled!
                 self.gameView?.ballWidth = self.settings!.ballWidth!
                 self.gameView?.ballSpeed = self.settings!.ballSpeed!
                 self.gameView?.numberOfBalls = self.settings!.numberOfBalls!
@@ -40,6 +41,26 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
             livesLabel?.text = "\(newValue)"
         }
     }
+    
+    let manager = CMMotionManager()
+    var accelerometerEnabled = false {
+        didSet {
+            if self.accelerometerEnabled {
+                if manager.deviceMotionAvailable {
+                    manager.deviceMotionUpdateInterval = 0.01
+                    manager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
+                        [weak self] (data: CMAccelerometerData!, error: NSError!) in
+                        self!.gameView!.movePaddleBy(CGPoint(x: 20.0 * data.acceleration.x , y: 0.0))
+                    }
+                }
+            } else {
+                if manager.deviceMotionAvailable {
+                    manager.stopAccelerometerUpdates()
+                }
+            }
+        }
+    }
+
 
         
     override func viewDidLoad() {
