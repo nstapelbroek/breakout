@@ -97,14 +97,17 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
         if self.gameView.gameState == .Initial {
             self.gameView.preloadGame()
             self.gameView.loadGame()
+            self.pauseAlert.title = "Ready, Set, Go!"
             self.presentViewController(self.pauseAlert, animated: true, completion: nil)
         } else if self.gameView.gameState == .Paused {
             let newSettings = BreakoutSettings.load()
             if settings?.description != newSettings.description {
                 settings = newSettings
                 self.gameView.reloadGame()
+                self.pauseAlert.title = "Game reloaded"
                 self.presentViewController(self.pauseAlert, animated: true, completion: nil)
             } else {
+                self.pauseAlert.title = "Game paused"
                 self.presentViewController(self.pauseAlert, animated: true, completion: nil)
             }
         }
@@ -159,6 +162,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
             self.restartAlert.title = "You won the game!"
             self.presentViewController(self.restartAlert, animated: true, completion: nil)
         } else {
+            self.pauseAlert.title = "Level up!"
             self.presentViewController(self.pauseAlert, animated: true, completion: nil)
         }
     }
