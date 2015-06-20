@@ -14,7 +14,7 @@ class SavannaTheme: BreakoutTheme {
     override class var Name: String { return "Savanna Theme" }
     
     override func getBallColor() -> UIColor {
-        return UIColor.greenColor()
+        return UIColor.blackColor()
     }
     
     override func getPaddleColor() -> UIColor {
