@@ -18,7 +18,11 @@ class SavannaTheme: BreakoutTheme {
     }
     
     override func getPaddleColor(forSize paddleSize: CGSize?) -> UIColor {
-        return UIColor.purpleColor()
+        if let size = paddleSize {
+            return UIColor.getUIColorNamed("savanna_paddle", forSize: size)
+        } else {
+            return super.getBackgroundColor(forSize: paddleSize)
+        }
     }
     
     override func getBrickColor(brickHealth: Int, forSize brickSize: CGSize?) -> UIColor {
