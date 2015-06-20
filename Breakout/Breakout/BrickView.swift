@@ -20,6 +20,7 @@ class BrickView: UIView {
         self.size = frame.size
         self.origin = frame.origin
         self.backgroundColor = background
+        self.health = health
     }
 
     required init(coder aDecoder: NSCoder) {
