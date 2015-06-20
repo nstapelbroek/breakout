@@ -32,7 +32,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     
     private var pauseAlert = UIAlertController (
         title: "Game paused",
-        message: "Please select an option below to continue",
+        message: "Tab the button below to resume",
         preferredStyle: UIAlertControllerStyle.Alert
     )
     

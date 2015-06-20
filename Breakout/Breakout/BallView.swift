@@ -12,15 +12,16 @@ class BallView: UIView {
     
     var lastVelocity: CGPoint?
 
-    init(gameFrame: CGSize, maxWidth: CGFloat) {
+    init(gameFrame: CGSize, maxWidth: CGFloat, offset:Int = 0) {
         let width = gameFrame.width * maxWidth
         let size = CGSize(width: width, height: width)
-        let x = (gameFrame.width - width) / 2
+        let x = (gameFrame.width - width) / 2 + CGFloat(-50 + (offset*50))
         let y = (gameFrame.height + width) / 2
         let origin = CGPoint(x: x, y: y)
         
         super.init(frame: CGRect(origin: origin, size: size))
     }
+    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

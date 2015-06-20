@@ -238,7 +238,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     func addBalls() {
         for var i = 0; i < numberOfBalls; i++
         {
-            addBall(false)
+            addBall(false, number: i)
         }
         
         if !balls.isEmpty {
@@ -246,8 +246,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         }
     }
     
-    func addBall(shouldPush: Bool) {
-        var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth))
+    func addBall(shouldPush: Bool, number:Int = 0) {
+        var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth), offset: number)
         ball.backgroundColor = theme?.getBallColor(forSize: ball.bounds.size)
         self.breakoutBehavior.addBall(ball)
         if shouldPush {
