@@ -116,7 +116,7 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
     
     
     func unPauseGame() {
-        countdown = 5
+        countdown = 3
         countdownLabel.text = "Game starting in: \(countdown)"
         NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countDown:"), userInfo: nil, repeats: true)
     }
