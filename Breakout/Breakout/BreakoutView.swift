@@ -168,7 +168,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
         self.addBricks()
         self.addPaddle()
         self.addBalls()
-        self.backgroundColor = self.theme.getBackgroundColor()
+        self.backgroundColor = self.theme.getBackgroundColor(forSize: self.bounds.size)
         self.gameState = .Loaded
     }
     
@@ -202,7 +202,8 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
                 let y = (CGFloat(rowNumber) * (size.height + (2 * CGFloat(brickPadding)))) + CGFloat(brickPadding)
                 let origin = CGPoint(x: x, y: y)
                 let brickHealth: Int = brickInfo[brickNumber].toInt()!
-                let brick = BrickView(frame: CGRect(origin: origin, size: size), health: brickHealth, background:theme.getBrickColor(brickHealth))
+                let brick = BrickView(frame: CGRect(origin: origin, size: size), health: brickHealth)
+                brick.backgroundColor = theme.getBrickColor(brickHealth, forSize: brick.bounds.size)
                 
                 let brickId = brickNumber + (brickInfo.count * rowNumber)
                 bricks[brickId] = brick
@@ -247,7 +248,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     
     func addBall(shouldPush: Bool) {
         var ball = BallView(gameFrame: bounds.size, maxWidth: CGFloat(ballWidth))
-        ball.backgroundColor = theme?.getBallColor()
+        ball.backgroundColor = theme?.getBallColor(forSize: ball.bounds.size)
         self.breakoutBehavior.addBall(ball)
         if shouldPush {
             self.breakoutBehavior.pushBall(ball, magnitude: self.ballSpeed)
@@ -285,7 +286,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
     
     func addPaddle() {
         paddle = PaddleView(gameFrame: self.bounds.size, maxWidth: CGFloat(self.paddleWidth))
-        paddle?.backgroundColor = theme?.getPaddleColor()
+        paddle!.backgroundColor = theme?.getPaddleColor(forSize: paddle!.bounds.size)
         self.breakoutBehavior.addBarrier(UIBezierPath(rect: paddle!.frame), named: PathNames.PaddleBarrier)
         self.breakoutBehavior.addPaddle(paddle!)
         paddle!.setBreakoutBehavior(breakoutBehavior, withPathName: PathNames.PaddleBarrier)
@@ -302,7 +303,7 @@ class BreakoutView: UIView, UIDynamicAnimatorDelegate, UICollisionBehaviorDelega
             if let index = identifier as? Int {
                 let brick = self.bricks[index]
                 brick!.health = (brick!.health - 1)
-                brick!.backgroundColor = theme?.getBrickColor(brick!.health)
+                brick!.backgroundColor = theme?.getBrickColor(brick!.health, forSize: brick!.bounds.size)
                 if let delegate = self.breakoutDelegate {
                     delegate.onBrickHit(brick!.health)
                 }

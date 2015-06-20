@@ -13,15 +13,15 @@ class DefaultBreaktoutTheme: BreakoutTheme {
     
     override class var Name: String { return "Default Theme" }
     
-    override func getBallColor() -> UIColor {
+    override func getBallColor(forSize ballSize: CGSize?) -> UIColor {
         return UIColor.orangeColor()
     }
     
-    override func getPaddleColor() -> UIColor {
+    override func getPaddleColor(forSize paddleSize: CGSize?) -> UIColor {
         return UIColor.blackColor()
     }
     
-    override func getBrickColor(brickHealth: Int) -> UIColor {
+    override func getBrickColor(brickHealth: Int, forSize brickSize: CGSize?) -> UIColor {
         switch brickHealth {
         case 1: return UIColor.blueColor()
         case 2: return UIColor.orangeColor()
@@ -32,7 +32,7 @@ class DefaultBreaktoutTheme: BreakoutTheme {
         }
     }
     
-    override func getBackgroundColor() -> UIColor {
+    override func getBackgroundColor(forSize backgroundSize: CGSize?) -> UIColor {
         return UIColor.whiteColor()
     }
 }

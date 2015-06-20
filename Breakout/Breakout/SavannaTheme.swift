@@ -13,28 +13,45 @@ class SavannaTheme: BreakoutTheme {
     
     override class var Name: String { return "Savanna Theme" }
     
-    override func getBallColor() -> UIColor {
+    override func getBallColor(forSize ballSize: CGSize?) -> UIColor {
         return UIColor.blackColor()
     }
     
-    override func getPaddleColor() -> UIColor {
+    override func getPaddleColor(forSize paddleSize: CGSize?) -> UIColor {
         return UIColor.purpleColor()
     }
     
-    override func getBrickColor(brickHealth: Int) -> UIColor {
-        switch brickHealth {
-        //TODO decide if we want to make UIColor's with images scaling or not
-        case 1: return UIColor(patternImage: UIImage(named: "savanna_block_1")!)
-        case 2: return UIColor(patternImage: UIImage(named: "savanna_block_2")!)
-        case 3: return UIColor(patternImage: UIImage(named: "savanna_block_3")!)
-        case 4: return UIColor(patternImage: UIImage(named: "savanna_block_4")!)
-        case 5: return UIColor.cyanColor()
-        default: return UIColor.grayColor()
+    override func getBrickColor(brickHealth: Int, forSize brickSize: CGSize?) -> UIColor {
+        if let size = brickSize {
+            switch brickHealth {
+            case 1: return UIColor.getUIColorNamed("savanna_block_1", forSize: size)
+            case 2: return UIColor.getUIColorNamed("savanna_block_2", forSize: size)
+            case 3: return UIColor.getUIColorNamed("savanna_block_3", forSize: size)
+            case 4: return UIColor.getUIColorNamed("savanna_block_4", forSize: size)
+            case 5: return UIColor.cyanColor()
+            default: return UIColor.grayColor()
+            }
+        } else {
+            return super.getBrickColor(brickHealth, forSize: brickSize)
         }
     }
     
-    override func getBackgroundColor() -> UIColor {
-        //TODO decide if we want to make UIColor's with images scaling or not
-        return UIColor(patternImage: UIImage(named: "savanna_background")!)
+    override func getBackgroundColor(forSize backgroundSize: CGSize?) -> UIColor {
+        if let size = backgroundSize {
+            return UIColor.getUIColorNamed("savanna_background", forSize: size)
+        } else {
+            return super.getBackgroundColor(forSize: backgroundSize)
+        }
+    }
+}
+
+private extension UIColor {
+    static func getUIColorNamed(name: String, forSize imageSize: CGSize) -> UIColor {
+        UIGraphicsBeginImageContext(imageSize)
+        UIImage(named: name)!.drawInRect(CGRect(origin: CGPointZero, size: imageSize))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return UIColor(patternImage: image)
     }
 }

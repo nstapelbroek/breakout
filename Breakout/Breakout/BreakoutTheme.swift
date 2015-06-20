@@ -13,12 +13,12 @@ class BreakoutTheme {
     
     class var Name: String { return "Theme name" }
     
-    func getBallColor() -> UIColor { return UIColor.blackColor() }
+    func getBallColor(forSize ballSize: CGSize?) -> UIColor { return UIColor.blackColor() }
     
-    func getPaddleColor() -> UIColor { return UIColor.blackColor() }
+    func getPaddleColor(forSize paddleSize: CGSize?) -> UIColor { return UIColor.blackColor() }
     
-    func getBrickColor(brickHealth: Int) -> UIColor { return UIColor.blackColor() }
+    func getBrickColor(brickHealth: Int, forSize brickSize: CGSize?) -> UIColor { return UIColor.blackColor() }
     
-    func getBackgroundColor() -> UIColor { return UIColor.whiteColor() }
+    func getBackgroundColor(forSize backgroundSize: CGSize?) -> UIColor { return UIColor.whiteColor() }
     
 }

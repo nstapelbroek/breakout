@@ -15,11 +15,10 @@ class BrickView: UIView {
     private var origin: CGPoint?
     var health: Int = 1
     
-    init(frame: CGRect, health: Int, background: UIColor) {
+    init(frame: CGRect, health: Int) {
         super.init(frame: frame)
         self.size = frame.size
         self.origin = frame.origin
-        self.backgroundColor = background
         self.health = health
     }
 
