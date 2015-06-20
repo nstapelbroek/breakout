@@ -154,6 +154,8 @@ class BreakoutViewController: UIViewController, UIBreakoutDelegate {
             self.gameView.pauseGame()
             self.restartAlert.title = "You won the game!"
             self.presentViewController(self.restartAlert, animated: true, completion: nil)
+        } else {
+            self.presentViewController(self.pauseAlert, animated: true, completion: nil)
         }
     }
     
